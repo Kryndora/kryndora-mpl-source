@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://cv7lnp3aubm50"]
+
+[ext_resource type="FontFile" uid="uid://clwbylh8y2lf2" path="res://assets/fonts/creator/JetBrainsMono-Regular.ttf" id="1_0sus1"]
+[ext_resource type="Script" uid="uid://dgyysdy1exi6n" path="res://scripts/client/ui/misc/MinimalPerformanceOverlay.cs" id="2_w2v5h"]
+
+[sub_resource type="Theme" id="Theme_bqif3"]
+default_font = ExtResource("1_0sus1")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kryndora_stat"]
+content_margin_left = 10.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+bg_color = Color(0.02745098, 0.07058824, 0.101960786, 0.8392157)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.14901961, 0.7490196, 0.827451, 0.55)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.28)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[node name="MinimalPerformanceOverlay" type="HBoxContainer" unique_id=2105175392]
+visible = false
+mouse_filter = 2
+theme = SubResource("Theme_bqif3")
+theme_override_constants/separation = 8
+alignment = 2
+script = ExtResource("2_w2v5h")
+
+[node name="FPS" type="PanelContainer" parent="." unique_id=16400117]
+custom_minimum_size = Vector2(92, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kryndora_stat")
+
+[node name="Layout" type="HBoxContainer" parent="FPS" unique_id=848896588]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+alignment = 2
+
+[node name="Sub" type="Label" parent="FPS/Layout" unique_id=230175163]
+modulate = Color(0.627451, 0.91764706, 1, 0.82)
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 12
+text = "FPS"
+
+[node name="Label" type="Label" parent="FPS/Layout" unique_id=755729183]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.9254902, 0.9843137, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "140"
+vertical_alignment = 2
+
+[node name="Ping" type="PanelContainer" parent="." unique_id=1261011243]
+custom_minimum_size = Vector2(92, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kryndora_stat")
+
+[node name="Layout" type="HBoxContainer" parent="Ping" unique_id=1368972758]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+alignment = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Ping/Layout" unique_id=1972443477]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="Ping/Layout/VBoxContainer" unique_id=1506564246]
+modulate = Color(0.627451, 0.91764706, 1, 0.62)
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 12
+text = "ms"
+
+[node name="Label2" type="Label" parent="Ping/Layout/VBoxContainer" unique_id=1222230707]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.627451, 0.91764706, 1, 0.82)
+theme_override_font_sizes/font_size = 12
+text = "Ping"
+
+[node name="Label" type="Label" parent="Ping/Layout" unique_id=481045088]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.9254902, 0.9843137, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "8"
