@@ -1,0 +1,107 @@
+[gd_scene format=3 uid="uid://b83h6uqayrm68"]
+
+[ext_resource type="Script" uid="uid://vqi6rrvanbjy" path="res://scripts/creator/ui/ui-gizmo/UIGizmoBox.cs" id="1_ytpjd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2qiyr"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.7372549, 0.34509805, 1)
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ytpjd"]
+content_margin_left = 4.0
+content_margin_right = 4.0
+bg_color = Color(1, 0.7372549, 0.34509805, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="Control" type="Panel" unique_id=1135600947 node_paths=PackedStringArray("_sizeIndLabel")]
+process_priority = 1
+offset_right = 100.0
+offset_bottom = 100.0
+focus_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_2qiyr")
+script = ExtResource("1_ytpjd")
+_sizeIndLabel = NodePath("SizeIndicator/SizeLabel")
+
+[node name="L1" type="Panel" parent="." unique_id=1770564682]
+visible = false
+layout_mode = 0
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+mouse_default_cursor_shape = 12
+
+[node name="L2" type="Panel" parent="." unique_id=571195767]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+mouse_default_cursor_shape = 11
+
+[node name="L3" type="Panel" parent="." unique_id=163178296]
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_vertical = 0
+mouse_default_cursor_shape = 11
+
+[node name="L4" type="Panel" parent="." unique_id=1250763191]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_default_cursor_shape = 12
+
+[node name="SizeIndicator" type="PanelContainer" parent="." unique_id=1872477436]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -27.0
+offset_top = 5.0
+offset_right = 27.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ytpjd")
+
+[node name="SizeLabel" type="Label" parent="SizeIndicator" unique_id=439719428]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.28070277, 0.17797107, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "0x0"
+horizontal_alignment = 1

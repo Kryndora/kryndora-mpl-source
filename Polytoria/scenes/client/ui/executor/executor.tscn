@@ -1,0 +1,158 @@
+[gd_scene format=3 uid="uid://cdqg67r7uesws"]
+
+[ext_resource type="Script" uid="uid://v7fsh2u5c21a" path="res://scripts/client/executor/ExecutorUI.cs" id="1_a6j1y"]
+[ext_resource type="FontFile" uid="uid://clwbylh8y2lf2" path="res://assets/fonts/creator/JetBrainsMono-Regular.ttf" id="2_thy83"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.109804, 0.117647, 0.133333, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.18, 0.5, 0.95, 0.35)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_code"]
+bg_color = Color(0.0627451, 0.0666667, 0.0784314, 1)
+content_margin_left = 12.0
+content_margin_top = 10.0
+content_margin_right = 12.0
+content_margin_bottom = 10.0
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.215686, 0.247059, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+bg_color = Color(0.172549, 0.188235, 0.219608, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+bg_color = Color(0.235294, 0.254902, 0.298039, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
+bg_color = Color(0.12549, 0.137255, 0.160784, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_run_normal"]
+bg_color = Color(0.164706, 0.490196, 0.968627, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_run_hover"]
+bg_color = Color(0.235294, 0.54902, 0.988235, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="Theme" id="Theme_gbck0"]
+default_font = ExtResource("2_thy83")
+Button/styles/hover = SubResource("StyleBoxFlat_btn_hover")
+Button/styles/normal = SubResource("StyleBoxFlat_btn_normal")
+Button/styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+Button/font_sizes/font_size = 15
+CodeEdit/styles/normal = SubResource("StyleBoxFlat_code")
+CodeEdit/font_sizes/font_size = 15
+
+[node name="Executor" type="Window" unique_id=1868306589 node_paths=PackedStringArray("_codeField", "_runCompatBtn", "_runBtn", "_clearBtn")]
+handle_input_locally = false
+oversampling_override = 1.0
+title = "Kryndora Admin Executor"
+initial_position = 2
+size = Vector2i(780, 560)
+min_size = Vector2i(520, 380)
+visible = false
+theme = SubResource("Theme_gbck0")
+script = ExtResource("1_a6j1y")
+_codeField = NodePath("PanelContainer/MarginContainer/VBoxContainer/CodeEdit")
+_runCompatBtn = NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/RunCompat")
+_runBtn = NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Run")
+_clearBtn = NodePath("PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Clear")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1111111111]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1530546764]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 22
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 22
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1650708753]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1002064851]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.337255, 0.901961, 1, 1)
+theme_override_font_sizes/font_size = 26
+text = "Kryndora Admin Executor"
+
+[node name="Subtitle" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1002064852]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.52, 0.57, 0.66, 1)
+theme_override_font_sizes/font_size = 13
+text = "Run Luau with admin access  ·  press F9 to toggle"
+
+[node name="Spacer" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1002064853]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+
+[node name="CodeEdit" type="CodeEdit" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=764453238]
+custom_minimum_size = Vector2(0, 320)
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "-- Write your Luau here..."
+gutters_draw_line_numbers = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=92533634]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Clear" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1234567890]
+custom_minimum_size = Vector2(110, 46)
+layout_mode = 2
+text = "Clear"
+
+[node name="ButtonSpacer" type="Control" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=92533635]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RunCompat" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1753162076]
+custom_minimum_size = Vector2(150, 46)
+layout_mode = 2
+text = "Run Compat"
+
+[node name="Run" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1053468353]
+custom_minimum_size = Vector2(130, 46)
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_run_hover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_run_normal")
+text = "Run"

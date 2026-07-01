@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://ijxy7f72n1k0"]
+
+[ext_resource type="Script" uid="uid://cw5atsra8g0t8" path="res://scripts/client/ui/playerlist/UILeaderboard.cs" id="1_1o8yt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_romx1"]
+
+[node name="Leaderboard" type="ScrollContainer" unique_id=461652606 node_paths=PackedStringArray("_layout")]
+size_flags_horizontal = 3
+mouse_filter = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_romx1")
+horizontal_scroll_mode = 0
+script = ExtResource("1_1o8yt")
+_layout = NodePath("Layout")
+
+[node name="Layout" type="VBoxContainer" parent="." unique_id=1803197793]
+layout_mode = 2
+size_flags_horizontal = 3

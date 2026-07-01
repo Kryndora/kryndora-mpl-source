@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://c2tql65t73ak5"]
+
+[ext_resource type="Script" uid="uid://cfxp8qsyv0dbl" path="res://scripts/shared/AppEntry.cs" id="1_ycj4g"]
+
+[node name="AppEntry" type="Control" unique_id=1181157848]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ycj4g")

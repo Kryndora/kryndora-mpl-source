@@ -1,0 +1,188 @@
+[gd_scene format=3 uid="uid://ecavo3ehaq2v"]
+
+[ext_resource type="Script" uid="uid://k7doplirk64r" path="res://scripts/creator/ui/misc/ViewportAxis.cs" id="1_mv8nn"]
+[ext_resource type="FontFile" uid="uid://clwbylh8y2lf2" path="res://assets/fonts/creator/JetBrainsMono-Regular.ttf" id="2_lvvhg"]
+
+[sub_resource type="Environment" id="Environment_mv8nn"]
+background_mode = 1
+background_color = Color(0.3403393, 0.34033933, 0.3403393, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mv8nn"]
+size = Vector3(0.2, 1, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lvvhg"]
+shading_mode = 0
+albedo_color = Color(0.84, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_mv8nn"]
+top_radius = 0.16
+bottom_radius = 0.04
+height = 0.73
+radial_segments = 8
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mv8nn"]
+shading_mode = 0
+albedo_color = Color(0.14760001, 0.82, 0.3941466, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q87ol"]
+shading_mode = 0
+albedo_color = Color(0, 0.2833333, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8jdmp"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_p6s2d"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="ViewportAxis" type="Control" unique_id=1356262339 node_paths=PackedStringArray("_pivot", "_container")]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = 16.0
+grow_horizontal = 0
+script = ExtResource("1_mv8nn")
+_pivot = NodePath("TextureRect/SubViewport/Node3D")
+_container = NodePath("TextureRect/SubViewport")
+
+[node name="TextureRect" type="SubViewportContainer" parent="." unique_id=1622363265]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -87.0
+offset_bottom = 87.0
+grow_horizontal = 0
+stretch = true
+mouse_target = true
+
+[node name="SubViewport" type="SubViewport" parent="TextureRect" unique_id=1452732389]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(87, 87)
+render_target_update_mode = 4
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="TextureRect/SubViewport" unique_id=1353520945]
+environment = SubResource("Environment_mv8nn")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="TextureRect/SubViewport" unique_id=756222310]
+transform = Transform3D(0.49999994, -0.8535535, -0.14644656, 0.5, 0.1464466, 0.8535534, -0.7071069, -0.4999999, 0.5, 0, 0, 0)
+light_energy = 2.0
+
+[node name="X" type="Area3D" parent="TextureRect/SubViewport" unique_id=1674040262]
+transform = Transform3D(1.3113416e-07, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, 1.3113416e-07, -5.7320566e-15, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TextureRect/SubViewport/X" unique_id=582125111]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_mv8nn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TextureRect/SubViewport/X" unique_id=1416688725]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+material_override = SubResource("StandardMaterial3D_lvvhg")
+mesh = SubResource("CylinderMesh_mv8nn")
+
+[node name="Label3D" type="Label3D" parent="TextureRect/SubViewport/X" unique_id=439217787]
+transform = Transform3D(1, 0, 0, 0, 1, -8.351872e-23, 0, -8.351872e-23, 1, 4.371139e-08, 1, -0.23372589)
+billboard = 1
+double_sided = false
+modulate = Color(0.8392157, 0, 0, 1)
+text = "X"
+font = ExtResource("2_lvvhg")
+font_size = 60
+outline_size = 0
+uppercase = true
+
+[node name="Label3D2" type="Label3D" parent="TextureRect/SubViewport/X" unique_id=331110724]
+transform = Transform3D(1, 0, 0, 0, 1, -8.351872e-23, 0, -8.351872e-23, 1, -4.371139e-08, -1, -0.2337258)
+billboard = 1
+double_sided = false
+modulate = Color(0.8392157, 0, 0, 1)
+text = "-X"
+font = ExtResource("2_lvvhg")
+font_size = 60
+outline_size = 0
+uppercase = true
+
+[node name="Y" type="Area3D" parent="TextureRect/SubViewport" unique_id=591630807]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TextureRect/SubViewport/Y" unique_id=97005872]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_mv8nn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TextureRect/SubViewport/Y" unique_id=1429337988]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+material_override = SubResource("StandardMaterial3D_mv8nn")
+mesh = SubResource("CylinderMesh_mv8nn")
+
+[node name="Label3D2" type="Label3D" parent="TextureRect/SubViewport/Y" unique_id=371806389]
+transform = Transform3D(-4.371139e-08, -1, 4.371139e-08, 0, -4.371139e-08, -1, 1, -4.371139e-08, 1.9106855e-15, 0.0023145676, 1.2337259, 0.005479336)
+billboard = 1
+double_sided = false
+modulate = Color(0.14509805, 0.8156863, 0.40392157, 1)
+text = "Y"
+font = ExtResource("2_lvvhg")
+font_size = 60
+outline_size = 0
+uppercase = true
+
+[node name="Label3D3" type="Label3D" parent="TextureRect/SubViewport/Y" unique_id=461807005]
+transform = Transform3D(-4.371139e-08, -1, 4.371139e-08, 0, -4.371139e-08, -1, 1, -4.371139e-08, 1.9106855e-15, 0.0023145676, -0.7662741, 0.005479336)
+billboard = 1
+double_sided = false
+modulate = Color(0.14509805, 0.8156863, 0.40392157, 1)
+text = "-Y"
+font = ExtResource("2_lvvhg")
+font_size = 60
+outline_size = 0
+uppercase = true
+
+[node name="Z" type="Area3D" parent="TextureRect/SubViewport" unique_id=259901094]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TextureRect/SubViewport/Z" unique_id=860474917]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_mv8nn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TextureRect/SubViewport/Z" unique_id=1545854099]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+material_override = SubResource("StandardMaterial3D_q87ol")
+mesh = SubResource("CylinderMesh_mv8nn")
+
+[node name="Label3D3" type="Label3D" parent="TextureRect/SubViewport/Z" unique_id=24771300]
+transform = Transform3D(-4.371139e-08, -1, 4.371139e-08, 1, -4.3711385e-08, 4.3711392e-08, -4.371139e-08, 4.3711392e-08, 1, 0, 1, -0.23372595)
+billboard = 1
+double_sided = false
+modulate = Color(0, 0.28235295, 1, 1)
+text = "Z"
+font = ExtResource("2_lvvhg")
+font_size = 60
+outline_size = 0
+uppercase = true
+
+[node name="Label3D4" type="Label3D" parent="TextureRect/SubViewport/Z" unique_id=519724349]
+transform = Transform3D(-4.371139e-08, -1, 4.371139e-08, 1, -4.3711385e-08, 4.3711392e-08, -4.371139e-08, 4.3711392e-08, 1, 0, -1, -0.23372586)
+billboard = 1
+double_sided = false
+modulate = Color(0, 0.28235295, 1, 1)
+text = "-Z"
+font = ExtResource("2_lvvhg")
+font_size = 60
+outline_size = 0
+uppercase = true
+
+[node name="Node3D" type="Node3D" parent="TextureRect/SubViewport" unique_id=1029460526]
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="TextureRect/SubViewport/Node3D" unique_id=720621715]
+transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1, 0, 0.28109196, 2)
+projection = 1
+size = 2.38
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TextureRect/SubViewport" unique_id=173651762]
+material_override = SubResource("StandardMaterial3D_8jdmp")
+mesh = SubResource("BoxMesh_p6s2d")
