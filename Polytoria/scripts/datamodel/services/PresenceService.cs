@@ -179,7 +179,7 @@ public sealed partial class PresenceService : Instance
 
 		if (Root.WorldInfo.HasValue)
 		{
-			details = GamePresenceText;
+			details = "Playing " + Root.WorldInfo.Value.Name;
 			largeText = Root.WorldInfo.Value.Name;
 		}
 		else

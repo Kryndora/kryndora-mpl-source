@@ -45,6 +45,7 @@ public partial class TextEditorRoot : Node
 	private LuaCompletionService? _completion = null!;
 
 	private Godot.Timer _autoCompleteTimer = null!;
+	private Godot.Timer _autoSaveTimer = null!;
 	private CancellationTokenSource? _diagCts;
 
 	public override void _EnterTree()
@@ -69,6 +70,11 @@ public partial class TextEditorRoot : Node
 		AddChild(_autoCompleteTimer = new());
 		_autoCompleteTimer.OneShot = true;
 		_autoCompleteTimer.Timeout += OnCompletionRequest;
+
+		AddChild(_autoSaveTimer = new());
+		_autoSaveTimer.WaitTime = 1;
+		_autoSaveTimer.Timeout += OnAutoSaveTimeout;
+		_autoSaveTimer.Start();
 
 		_completion = Container.TargetSession.LuaCompletion;
 		_completion?.PublishDiagnostics += OnPublishDiagnostics;
@@ -249,6 +255,18 @@ public partial class TextEditorRoot : Node
 	public void Save()
 	{
 		File.WriteAllText(Container.TargetFilePathAbsolute, CodeEditor.Text);
+	}
+
+	private void OnAutoSaveTimeout()
+	{
+		if (Saved)
+			return;
+		if (!CreatorSettingsService.Instance.Get<bool>(CreatorSettingKeys.CodeEditor.SaveCodeEverySecond))
+			return;
+
+		Save();
+		Saved = true;
+		SavedChanged?.Invoke(true);
 	}
 
 	private async void OnCodeEditTextChanged()

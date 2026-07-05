@@ -3,6 +3,7 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using Godot;
+using Polytoria.Shared;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -69,26 +70,14 @@ public partial class WebAssetLoader : Node
 			return new WebCacheItem();
 		}
 
+		item.URL = NormalizeUrl(item.URL);
 		byte[] buffer = await _client.GetByteArrayAsync(item.URL);
 
 		switch (item.Type)
 		{
 			case WebResourceType.Image:
 				{
-					Image image = new();
-					if (item.URL.EndsWith(".png"))
-					{
-						image.LoadPngFromBuffer(buffer);
-					}
-					else if (item.URL.EndsWith(".jpg"))
-					{
-						image.LoadJpgFromBuffer(buffer);
-					}
-					else
-					{
-						image.LoadPngFromBuffer(buffer);
-					}
-
+					Image image = LoadImage(buffer, item.URL);
 					image.GenerateMipmaps();
 					item.Resource = ImageTexture.CreateFromImage(image);
 
@@ -98,6 +87,74 @@ public partial class WebAssetLoader : Node
 			default:
 				throw new NotImplementedException($"Resource type {item.Type} not implemented!");
 		}
+	}
+
+	private static Image LoadImage(byte[] buffer, string url)
+	{
+		string lowerUrl = url.ToLowerInvariant();
+		Image image = new();
+		Error error;
+
+		if (lowerUrl.Contains(".jpg") || lowerUrl.Contains(".jpeg"))
+		{
+			error = image.LoadJpgFromBuffer(buffer);
+		}
+		else if (lowerUrl.Contains(".webp"))
+		{
+			error = image.LoadWebpFromBuffer(buffer);
+		}
+		else
+		{
+			error = image.LoadPngFromBuffer(buffer);
+		}
+
+		if (error != Error.Ok)
+		{
+			error = image.LoadPngFromBuffer(buffer);
+		}
+
+		if (error != Error.Ok)
+		{
+			error = image.LoadJpgFromBuffer(buffer);
+		}
+
+		if (error != Error.Ok)
+		{
+			error = image.LoadWebpFromBuffer(buffer);
+		}
+
+		if (error != Error.Ok)
+		{
+			throw new InvalidOperationException("Image decode failed with " + error);
+		}
+
+		return image;
+	}
+
+	private static string NormalizeUrl(string url)
+	{
+		if (!Uri.TryCreate(url, UriKind.Absolute, out Uri? uri))
+		{
+			return url;
+		}
+
+		if (uri.Host != "127.0.0.1" && uri.Host != "localhost" && uri.Host != "::1")
+		{
+			return url;
+		}
+
+		if (!Uri.TryCreate(Globals.MainEndpoint, UriKind.Absolute, out Uri? endpoint))
+		{
+			return url;
+		}
+
+		UriBuilder builder = new(endpoint)
+		{
+			Path = uri.AbsolutePath,
+			Query = uri.Query.TrimStart('?')
+		};
+
+		return builder.Uri.ToString();
 	}
 
 	public void GetResource(WebCacheItem item, Action<Resource> callback)

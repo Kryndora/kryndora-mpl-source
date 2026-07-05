@@ -23,6 +23,9 @@ public partial class UIImage : UIField
 	private ImageStretchModeEnum _stretchMode = ImageStretchModeEnum.Stretch;
 	private bool _flipH = false;
 	private bool _flipV = false;
+	private float _cornerRadius = 0f;
+	private static Shader? _roundShader;
+	private ShaderMaterial? _roundMat;
 
 	[Editable, ScriptProperty, Export]
 	public ImageAsset? Image
@@ -88,6 +91,18 @@ public partial class UIImage : UIField
 		{
 			_color = value;
 			NodeControl.SelfModulate = value;
+			OnPropertyChanged();
+		}
+	}
+
+	[Editable, ScriptProperty]
+	public float CornerRadius
+	{
+		get => _cornerRadius;
+		set
+		{
+			_cornerRadius = Mathf.Max(value, 0f);
+			ApplyCornerRadius();
 			OnPropertyChanged();
 		}
 	}
@@ -186,6 +201,28 @@ public partial class UIImage : UIField
 		base.Init();
 		IgnoreMouse = true;
 		StretchMode = ImageStretchModeEnum.Stretch;
+		GDTextureRect.Resized += OnResized;
+	}
+
+	private void OnResized()
+	{
+		if (_cornerRadius > 0f && _roundMat != null)
+			_roundMat.SetShaderParameter("rect_size", GDTextureRect.Size);
+	}
+
+	private void ApplyCornerRadius()
+	{
+		if (_cornerRadius <= 0f)
+		{
+			GDTextureRect.Material = null;
+			return;
+		}
+
+		_roundShader ??= GD.Load<Shader>("res://resources/shaders/ui/rounded_image.gdshader");
+		_roundMat ??= new ShaderMaterial { Shader = _roundShader };
+		_roundMat.SetShaderParameter("corner_radius", _cornerRadius);
+		_roundMat.SetShaderParameter("rect_size", GDTextureRect.Size);
+		GDTextureRect.Material = _roundMat;
 	}
 
 	private void SetToDefaultImage()

@@ -6,6 +6,7 @@ using Godot;
 using Polytoria.Datamodel;
 using Polytoria.Datamodel.Resources;
 using Polytoria.Shared;
+using Polytoria.Shared.AssetLoaders;
 using Polytoria.Utils;
 
 namespace Polytoria.Client.UI;
@@ -77,17 +78,28 @@ public sealed partial class UIMenuOverview : UIMenuViewBase
 		World root = Menu.CoreUI.Root;
 		if (root.WorldInfo.HasValue)
 		{
-			_placeTypeLabel.Visible = true;
+			_placeTypeLabel.Visible = false;
 			_placeCreatorLabel.Visible = true;
-			_placeNameLabel.Text = root.WorldInfo.Value.Name;
-			_placeTypeLabel.Text = root.WorldInfo.Value.Genre.Capitalize();
-			_placeCreatorLabel.Text = "By " + root.WorldInfo.Value.Creator.Name;
+			var info = root.WorldInfo.Value;
+			_placeNameLabel.Text = info.Name;
+			_placeCreatorLabel.Text = "By " + info.Creator.Name;
 
-			_placeThumbnailImage = new();
-			_placeThumbnailImage.ResourceLoaded += OnWorldThumbnailLoaded;
-			_placeThumbnailImage.ImageType = ImageTypeEnum.WorldThumbnail;
-			_placeThumbnailImage.ImageID = (uint)root.FirstWorldMedia;
-			_placeThumbnailImage.LoadResource();
+			if (!string.IsNullOrWhiteSpace(info.Thumbnail))
+			{
+				WebAssetLoader.Singleton.GetResource(new()
+				{
+					Type = WebResourceType.Image,
+					URL = info.Thumbnail
+				}, OnWorldThumbnailLoaded);
+			}
+			else if (root.WorldID != 0)
+			{
+				_placeThumbnailImage = new();
+				_placeThumbnailImage.ResourceLoaded += OnWorldThumbnailLoaded;
+				_placeThumbnailImage.ImageType = ImageTypeEnum.WorldThumbnail;
+				_placeThumbnailImage.ImageID = (uint)root.WorldID;
+				_placeThumbnailImage.LoadResource();
+			}
 		}
 		else
 		{

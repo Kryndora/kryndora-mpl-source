@@ -338,6 +338,7 @@ public sealed partial class Globals : Node
 #if CREATOR
 	public static Texture2D LoadIcon(string className)
 	{
+		if (className.EndsWith("Kryndora")) className = className[..^"Kryndora".Length];
 		return LoadCachedTexture(_iconsCache, className, DatamodelIconsPath, "Unknown");
 	}
 #endif

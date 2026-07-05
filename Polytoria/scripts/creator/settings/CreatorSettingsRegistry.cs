@@ -142,6 +142,18 @@ public static class CreatorSettingsRegistry
 				Step = 1
 			});
 
+		defs.Add(CreatorSettingKeys.CodeEditor.SaveCodeEverySecond,
+			new SettingDef<bool>
+			{
+				Key = CreatorSettingKeys.CodeEditor.SaveCodeEverySecond,
+				SectionKey = "code_editor",
+				Label = "Save Code Every Second",
+				Description = "Automatically save changed code files every second.",
+				ValueKind = SettingValueKind.Bool,
+				ControlKind = SettingControlKind.Toggle,
+				DefaultValue = true
+			});
+
 		// Popups
 		defs.Add(CreatorSettingKeys.Popups.CloseModelWarning,
 			new SettingDef<bool>

@@ -84,8 +84,7 @@ public class PTAssetProvider : IAssetProvider
 			case ResourceType.GuildThumbnail:
 			case ResourceType.GuildBanner:
 				{
-					Image image = new();
-					image.LoadPngFromBuffer(buffer);
+					Image image = LoadImage(buffer, response.Url);
 					image.GenerateMipmaps();
 					image.FixAlphaEdges();
 
@@ -121,6 +120,48 @@ public class PTAssetProvider : IAssetProvider
 		};
 
 		return url;
+	}
+
+	private static Image LoadImage(byte[] buffer, string url)
+	{
+		string lowerUrl = url.ToLowerInvariant();
+		Image image = new();
+		Error error;
+
+		if (lowerUrl.Contains(".jpg") || lowerUrl.Contains(".jpeg"))
+		{
+			error = image.LoadJpgFromBuffer(buffer);
+		}
+		else if (lowerUrl.Contains(".webp"))
+		{
+			error = image.LoadWebpFromBuffer(buffer);
+		}
+		else
+		{
+			error = image.LoadPngFromBuffer(buffer);
+		}
+
+		if (error != Error.Ok)
+		{
+			error = image.LoadPngFromBuffer(buffer);
+		}
+
+		if (error != Error.Ok)
+		{
+			error = image.LoadJpgFromBuffer(buffer);
+		}
+
+		if (error != Error.Ok)
+		{
+			error = image.LoadWebpFromBuffer(buffer);
+		}
+
+		if (error != Error.Ok)
+		{
+			throw new InvalidOperationException("Image decode failed with " + error);
+		}
+
+		return image;
 	}
 
 	public void Dispose()

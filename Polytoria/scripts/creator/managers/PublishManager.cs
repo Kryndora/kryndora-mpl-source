@@ -26,6 +26,9 @@ public static class PublishManager
 		{
 			var metadata = PackedFormat.ReadProjectMetadata(File.ReadAllText(projectPath.PathJoin(Globals.ProjectMetaFileName)));
 
+			metadata.UseVoiceChat = World.Current?.CoreUI?.UseVoiceChat ?? true;
+			File.WriteAllText(projectPath.PathJoin(Globals.ProjectMetaFileName), System.Text.Json.JsonSerializer.Serialize(metadata, ProjectJSONGenerationContext.Default.CreatorProjectMetadata));
+
 			var packed = await PackedFormat.PackProject(projectPath, loadOverlay.CreateProgressReporter("Publishing world"));
 
 			loadOverlay?.SetStatus("Uploading now...");

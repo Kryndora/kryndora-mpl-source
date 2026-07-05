@@ -113,9 +113,11 @@ public partial class RendererViewport : SubViewport
 			case AvatarPhotoTypeEnum.Headshot:
 				{
 					c3d.GlobalPosition = ptm.IsTestBody
-						? new Vector3(-0.05f, 1.4f, 2.2f)
+						? new Vector3(0f, 1.7f, 2.2f)
 						: new Vector3(-0.05f, 1.7f, 2.5f);
 					c3d.GlobalRotationDegrees = new(0, 0, 0);
+					if (ptm.IsTestBody)
+						npc.GDNode3D.RotationDegrees = new(0, 0, 0);
 					break;
 				}
 		}

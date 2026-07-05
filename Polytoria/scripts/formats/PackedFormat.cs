@@ -623,11 +623,13 @@ public struct CreatorProjectMetadata()
 	[JsonInclude] public string ProjectName = "Project Name";
 	[JsonInclude] public string MainWorld = "main.poly";
 	[JsonInclude] public int? IconID;
+	[JsonInclude] public bool UseVoiceChat = true;
 }
 
 [JsonSourceGenerationOptions(WriteIndented = true)]
 [JsonSerializable(typeof(string))]
 [JsonSerializable(typeof(int))]
+[JsonSerializable(typeof(bool))]
 [JsonSerializable(typeof(Dictionary<string, string>))]
 [JsonSerializable(typeof(CreatorProjectMetadata))]
 internal partial class ProjectJSONGenerationContext : JsonSerializerContext

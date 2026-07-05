@@ -109,16 +109,16 @@ public sealed partial class World : Instance
 	public ChatService Chat => FindChild<ChatService>("Chat")!;
 	public InputService Input => FindChild<InputService>("Input")!;
 	public FilterService Filter => FindChild<FilterService>("Filter")!;
-	public AssetsService Assets => FindChild<AssetsService>("Assets")!;
+	public AssetsServiceKryndora Assets => FindChild<AssetsServiceKryndora>("Assets")!;
 	public AchievementsService Achievements => FindChild<AchievementsService>("Achievements")!;
-	public CoreUIService CoreUI => FindChild<CoreUIService>("CoreUI")!;
+	public CoreUIServiceKryndora CoreUI => FindChild<CoreUIServiceKryndora>("CoreUI")!;
 	public Stats Stats => FindChild<Stats>("Stats")!;
 	public Teams Teams => FindChild<Teams>("Teams")!;
 	public DatastoreService Datastore => FindChild<DatastoreService>("Datastore")!;
 	public HttpService Http => FindChild<HttpService>("Http")!;
 	public InsertService Insert => FindChild<InsertService>("Insert")!;
 	public PurchasesService Purchases => FindChild<PurchasesService>("Purchases")!;
-	public TweenService Tween => FindChild<TweenService>("Tween")!;
+	public TweenServiceKryndora Tween => FindChild<TweenServiceKryndora>("Tween")!;
 	public CaptureService Capture => FindChild<CaptureService>("Capture")!;
 	public PresenceService Presence => FindChild<PresenceService>("Presence")!;
 	public PreferencesService Preferences => FindChild<PreferencesService>("Preferences")!;
@@ -126,7 +126,6 @@ public sealed partial class World : Instance
 	public WorldsService Worlds => FindChild<WorldsService>("Worlds")!;
 	public SocialService Social => FindChild<SocialService>("Social")!;
 	public BanService? Bans => FindChild<BanService>("BanService");
-	public KTweenService? KTween => FindChild<KTweenService>("KTween");
 #if CREATOR
 	public CreatorContextService CreatorContext => FindChild<CreatorContextService>("CreatorContext")!;
 #endif
@@ -539,11 +538,11 @@ public sealed partial class World : Instance
 			inputService.NetworkParent = this;
 		}
 
-		AssetsService? assetsService = FindChild<AssetsService>("Assets");
+		AssetsServiceKryndora? assetsService = FindChild<AssetsServiceKryndora>("Assets");
 
 		if (assetsService == null)
 		{
-			assetsService = Globals.LoadInstance<AssetsService>(Root);
+			assetsService = Globals.LoadInstance<AssetsServiceKryndora>(Root);
 			assetsService.NameOverride = "Assets";
 			assetsService.NetworkParent = this;
 		}
@@ -668,10 +667,10 @@ public sealed partial class World : Instance
 			achievementsService.NetworkParent = this;
 		}
 
-		CoreUIService? coreUIService = FindChild<CoreUIService>("CoreUI");
+		CoreUIServiceKryndora? coreUIService = FindChild<CoreUIServiceKryndora>("CoreUI");
 		if (coreUIService == null)
 		{
-			coreUIService = Globals.LoadInstance<CoreUIService>(Root);
+			coreUIService = Globals.LoadInstance<CoreUIServiceKryndora>(Root);
 			coreUIService.NameOverride = "CoreUI";
 			coreUIService.NetworkParent = this;
 		}
@@ -722,14 +721,6 @@ public sealed partial class World : Instance
 			purchasesService = Globals.LoadInstance<PurchasesService>(Root);
 			purchasesService.NameOverride = "Purchases";
 			purchasesService.NetworkParent = this;
-		}
-
-		TweenService? tweenService = FindChild<TweenService>("Tween");
-		if (tweenService == null)
-		{
-			tweenService = Globals.LoadInstance<TweenService>(Root);
-			tweenService.NameOverride = "Tween";
-			tweenService.NetworkParent = this;
 		}
 
 		CaptureService? captureService = FindChild<CaptureService>("Capture");
@@ -788,12 +779,12 @@ public sealed partial class World : Instance
 			banService.NetworkParent = this;
 		}
 
-		KTweenService? ktweenService = FindChild<KTweenService>("KTween");
-		if (ktweenService == null)
+		TweenServiceKryndora? tweenService = FindChild<TweenServiceKryndora>("Tween");
+		if (tweenService == null)
 		{
-			ktweenService = Globals.LoadInstance<KTweenService>(Root);
-			ktweenService.NameOverride = "KTween";
-			ktweenService.NetworkParent = this;
+			tweenService = Globals.LoadInstance<TweenServiceKryndora>(Root);
+			tweenService.NameOverride = "Tween";
+			tweenService.NetworkParent = this;
 		}
 
 		// Sub childrens

@@ -43,7 +43,7 @@ public partial class CoreUIRoot : CanvasLayer
 	public bool CoreUIActive { get; set; } = false;
 
 	public World Root { get; set; } = null!;
-	public CoreUIService Service { get; set; } = null!;
+	public CoreUIServiceKryndora Service { get; set; } = null!;
 
 	public override void _EnterTree()
 	{

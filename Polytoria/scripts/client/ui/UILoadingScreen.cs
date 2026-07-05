@@ -5,6 +5,7 @@
 using Godot;
 using Polytoria.Datamodel.Resources;
 using Polytoria.Schemas.API;
+using Polytoria.Shared.AssetLoaders;
 
 namespace Polytoria.Client.UI;
 
@@ -28,6 +29,7 @@ public partial class UILoadingScreen : Control
 	private bool _iconReady = false;
 	private bool _iconAppeared = false;
 	private bool _bgAppeared = false;
+	private bool _thumbnailRequested = false;
 
 	private ClientEntry _entry = null!;
 
@@ -71,7 +73,13 @@ public partial class UILoadingScreen : Control
 		if (_bgAppeared) return;
 		_bgAppeared = true;
 
-		_gameThumbnailRect.Texture = (Texture2D)resource;
+		Texture2D texture = (Texture2D)resource;
+		_gameThumbnailRect.Texture = texture;
+		if (!_iconReady)
+		{
+			_gameIconRect.Texture = texture;
+			_iconReady = true;
+		}
 		_bgAnimPlay.Play("fade_in");
 	}
 
@@ -111,23 +119,14 @@ public partial class UILoadingScreen : Control
 			{
 				OnWorldMediaReady(_entry.Root.WorldMedia);
 			}
-			else
-			{
-				_entry.Root.WorldMediaReady += OnWorldMediaReady;
-			}
 		}
 	}
 
 	private void OnWorldInfoReady(APIPlaceInfo info)
 	{
-		_gameIconImage.ImageType = ImageTypeEnum.PlaceIcon;
-		_gameIconImage.ImageID = (uint)info.Id;
-
-		// This has to be call manually to force resource load, usual load is queued in frame
-		_gameIconImage.LoadResource();
-
 		_gameTitleLabel.Text = info.Name;
 		_gameCreatorLabel.Text = "By " + info.Creator.Name;
+		LoadGameThumbnail(info);
 		AppearInfo();
 	}
 
@@ -141,9 +140,35 @@ public partial class UILoadingScreen : Control
 
 	private void OnWorldMediaReady(APIPlaceMedia[] _)
 	{
+		if (_thumbnailRequested || _entry.Root.WorldID == 0) return;
+		LoadGameThumbnail((uint)_entry.Root.WorldID);
+	}
+
+	private void LoadGameThumbnail(uint gameId)
+	{
+		if (_thumbnailRequested || gameId == 0) return;
+		_thumbnailRequested = true;
 		_gameThumbnailImage.ImageType = ImageTypeEnum.WorldThumbnail;
-		_gameThumbnailImage.ImageID = (uint)_entry.Root.FirstWorldMedia;
+		_gameThumbnailImage.ImageID = gameId;
 		_gameThumbnailImage.LoadResource();
+	}
+
+	private void LoadGameThumbnail(APIPlaceInfo info)
+	{
+		if (_thumbnailRequested) return;
+
+		if (!string.IsNullOrWhiteSpace(info.Thumbnail))
+		{
+			_thumbnailRequested = true;
+			WebAssetLoader.Singleton.GetResource(new()
+			{
+				Type = WebResourceType.Image,
+				URL = info.Thumbnail
+			}, OnGameThumbnailLoaded);
+			return;
+		}
+
+		LoadGameThumbnail((uint)info.Id);
 	}
 
 	private void InstanceLoadedProgress(int current, int max)

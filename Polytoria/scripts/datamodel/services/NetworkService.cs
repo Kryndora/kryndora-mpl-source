@@ -385,6 +385,9 @@ public sealed partial class NetworkService : Instance
 		ActivePeerIDs.Add(1);
 		IsServer = true;
 
+		if (Root.WorldID == 0 && Globals.ReadCmdArgs().TryGetValue("platformgameid", out string? serverGameId) && int.TryParse(serverGameId, out int serverWorldId) && serverWorldId > 0)
+			Root.WorldID = serverWorldId;
+
 		if (Globals.IsInGDEditor)
 		{
 			DisplayServer.WindowSetTitle($"{Globals.AppDisplayName} - Server");
@@ -654,6 +657,13 @@ public sealed partial class NetworkService : Instance
 		RpcId(1, nameof(NetAuthResponse), Entry.TestUserID, PolyAuthAPI.Token, (int)NetworkMode, (int)platform, platformName, pk);
 	}
 
+	[NetRpc(AuthorityMode.Server, TransferMode = TransferMode.Reliable)]
+	private void NetRecvWorldId(int worldId)
+	{
+		if (worldId > 0)
+			Root.WorldID = worldId;
+	}
+
 
 	[NetRpc(AuthorityMode.Any, TransferMode = TransferMode.Reliable)]
 	private async void NetAuthResponse(int testUserID, string userToken, int networkMode, int platform, string platformStr, byte[] pk)
@@ -687,6 +697,7 @@ public sealed partial class NetworkService : Instance
 		APIValidateResponse validateRes;
 		APIUserInfo userData;
 		bool consoleAllowed = false;
+		bool freecamAllowed = false;
 		try
 		{
 			bool isLocalTest = OS.HasFeature("offline") || (Root.Entry != null && Root.Entry.IsSoloTest);
@@ -760,7 +771,7 @@ public sealed partial class NetworkService : Instance
 			banMsg += banExpiry.HasValue
 				? $"\nExpires in: {FormatBanDuration(banExpiry.Value - DateTime.UtcNow)}"
 				: "\nThis ban is permanent.";
-			DisconnectPeer(peerID, banMsg, DisconnectionCodeEnum.Kicked);
+			DisconnectPeer(peerID, banMsg, DisconnectionCodeEnum.Banned);
 			return;
 		}
 
@@ -782,6 +793,25 @@ public sealed partial class NetworkService : Instance
 		// Apply validation data
 		plr.IsCreator = validateRes.IsCreator;
 		plr.IsConsoleAllowed = consoleAllowed;
+
+		Globals.ReadCmdArgs().TryGetValue("freecamaccess", out string? fcaStr);
+		string fca = string.IsNullOrWhiteSpace(fcaStr) ? "private" : fcaStr;
+		if (fca == "all" || validateRes.IsCreator)
+		{
+			freecamAllowed = true;
+		}
+		else if (fca == "friends")
+		{
+			Globals.ReadCmdArgs().TryGetValue("ownerfriends", out string? fcFriendsStr);
+			if (!string.IsNullOrWhiteSpace(fcFriendsStr))
+			{
+				foreach (string fid in fcFriendsStr.Split(','))
+				{
+					if (int.TryParse(fid, out int f) && f == userData.Id) { freecamAllowed = true; break; }
+				}
+			}
+		}
+		plr.CanFreecam = freecamAllowed;
 		plr.IsAgeRestricted = validateRes.IsAgeRestricted;
 		plr.CanChat = validateRes.CanChat;
 
@@ -831,6 +861,9 @@ public sealed partial class NetworkService : Instance
 
 		PeerPreInit?.Invoke(peerID);
 		ReplicateSync.SyncPlaceToPlayer(plr);
+
+		if (Root.WorldID > 0)
+			RpcId(peerID, nameof(NetRecvWorldId), Root.WorldID);
 
 		// Connection timeout
 		await Globals.Singleton.WaitAsync(ConnectTimeoutSec);
@@ -1220,7 +1253,8 @@ public sealed partial class NetworkService : Instance
 		AFK,
 		ConnectTimeout,
 		IntegrityFail,
-		NetInstanceFailure
+		NetInstanceFailure,
+		Banned
 	}
 
 	public enum NetworkModeEnum

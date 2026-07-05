@@ -33,6 +33,9 @@ public partial class ViewHomePage : MobileViewBase
 		{
 			_usernameLabel.Text = PolyMobileAuthAPI.CurrentUserInfo.Username;
 		}
+		_usernameLabel.MouseFilter = Control.MouseFilterEnum.Stop;
+		_usernameLabel.MouseDefaultCursorShape = Control.CursorShape.PointingHand;
+		_usernameLabel.GuiInput += OnUsernameTapped;
 		LoadFriends();
 	}
 
@@ -55,6 +58,16 @@ public partial class ViewHomePage : MobileViewBase
 			_usernameLabel.Text = response.Username;
 		}
 		LoadFriends();
+	}
+
+	private void OnUsernameTapped(InputEvent @event)
+	{
+		bool tap = (@event is InputEventMouseButton mb && mb.Pressed && mb.ButtonIndex == MouseButton.Left)
+			|| (@event is InputEventScreenTouch st && st.Pressed);
+		if (tap && PolyMobileAuthAPI.CurrentUserInfo.Id > 0)
+		{
+			MobileUI.Singleton.SwitchTo(MobileViewEnum.Profile, PolyMobileAuthAPI.CurrentUserInfo.Id);
+		}
 	}
 
 	private async void LoadFriends()

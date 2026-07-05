@@ -462,6 +462,9 @@ public sealed partial class ClientEntry : Node3D
 					PolyAuthAPI.SetAuthToken(token);
 				}
 
+				if (Globals.ReadCmdArgs().TryGetValue("platformgameid", out string? platformGameId) && int.TryParse(platformGameId, out int worldId) && worldId > 0)
+					Root.WorldID = worldId;
+
 				networkService.CreateClient(connectAddress, port);
 			}
 		}

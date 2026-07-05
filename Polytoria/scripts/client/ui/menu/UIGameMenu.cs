@@ -184,8 +184,8 @@ public partial class UIGameMenu : Control
 		}
 
 		StyleTabButton(GetNodeOrNull<Button>("Pivot/Pivot2/Panel/Layout/Layout/Overview"), "Home");
-		StyleTabButton(GetNodeOrNull<Button>("Pivot/Pivot2/Panel/Layout/Layout/Players"), "People");
-		StyleTabButton(GetNodeOrNull<Button>("Pivot/Pivot2/Panel/Layout/Layout/Settings"), "Options");
+		StyleTabButton(GetNodeOrNull<Button>("Pivot/Pivot2/Panel/Layout/Layout/Players"), "Players");
+		StyleTabButton(GetNodeOrNull<Button>("Pivot/Pivot2/Panel/Layout/Layout/Settings"), "Settings");
 	}
 
 	private static void StyleTabButton(Button? button, string text)

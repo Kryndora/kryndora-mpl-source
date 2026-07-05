@@ -300,6 +300,9 @@ public sealed partial class Player : NPC
 	public bool IsConsoleAllowed { get; internal set; }
 
 	[ScriptProperty, SyncVar]
+	public bool CanFreecam { get; internal set; }
+
+	[ScriptProperty, SyncVar]
 	public Color ChatColor { get; set; } = new(1, 1, 1);
 
 	[ScriptProperty, Attributes.Obsolete("Use Input.IsInputFocused instead")]
@@ -693,20 +696,6 @@ public sealed partial class Player : NPC
 			}
 		}
 
-		if (@event.IsActionPressed("toggle_freecam") && (IsAdmin || IsCreator))
-		{
-			if (Root.Environment.CurrentCamera?.Mode == Camera.CameraModeEnum.Free)
-			{
-				Root.Environment.CurrentCamera.Mode = Camera.CameraModeEnum.Follow;
-				CanMove = true;
-			}
-			else
-			{
-				Root.Environment.CurrentCamera?.Mode = Camera.CameraModeEnum.Free;
-				CanMove = false;
-			}
-		}
-
 		if (IsDead) { return; }
 
 		if (@event.IsActionPressed("jump"))
@@ -745,6 +734,11 @@ public sealed partial class Player : NPC
 	{
 		IsLocal = true;
 		SendPing();
+
+		if (Root.SessionType == World.SessionTypeEnum.Client)
+		{
+			GDNode.AddChild(new FreecamKryndora(Root, this));
+		}
 
 		CamAttach = Globals.LoadInstance<Dynamic>(Root);
 		CamAttach.Name = "CameraAttachment";

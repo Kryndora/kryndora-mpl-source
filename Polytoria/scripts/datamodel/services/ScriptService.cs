@@ -161,7 +161,6 @@ public sealed partial class ScriptService : Instance
 			{ "Input", root.Input },
 			{ "Achievements", root.Achievements },
 			{ "Tween", root.Tween },
-			{ "KTween", root.KTween },
 			{ "BanService", root.Bans },
 			{ "CoreUI", root.CoreUI },
 			{ "Stats", root.Stats },

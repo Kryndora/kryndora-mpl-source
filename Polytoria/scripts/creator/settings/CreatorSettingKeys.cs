@@ -27,6 +27,7 @@ public static class CreatorSettingKeys
 		public const string PreferredEditor = "code_editor.preferred_editor";
 		public const string IndentationMode = "code_editor.indentation_mode";
 		public const string IndentationSize = "code_editor.indentation_size";
+		public const string SaveCodeEverySecond = "code_editor.save_code_every_second";
 	}
 
 	public static class Popups

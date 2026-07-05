@@ -66,7 +66,7 @@ text = "v6.9.420"
 
 [node name="Label2" type="Label" parent="MarginContainer/Control2/HBoxContainer/VBoxContainer2/VBoxContainer" unique_id=2020065999]
 layout_mode = 2
-text = "© 2019-2026"
+text = "© 2026"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control2/HBoxContainer" unique_id=1107018165]
 layout_mode = 2
@@ -86,64 +86,15 @@ theme_override_constants/separation = 0
 
 [node name="Label2" type="Label" parent="MarginContainer/Control2/HBoxContainer/VBoxContainer/VBoxContainer/VBoxContainer" unique_id=946923703]
 layout_mode = 2
-text = "willemsteller"
+text = "Louis"
 horizontal_alignment = 1
 
 [node name="Label3" type="Label" parent="MarginContainer/Control2/HBoxContainer/VBoxContainer/VBoxContainer/VBoxContainer" unique_id=722425681]
 layout_mode = 2
-text = "Bandito Burrito"
+text = "Steve"
 horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/Control2/HBoxContainer/VBoxContainer" unique_id=1326937033]
-custom_minimum_size = Vector2(36, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/Control2/HBoxContainer/VBoxContainer" unique_id=558772411]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MarginContainer/Control2/HBoxContainer/VBoxContainer/VBoxContainer2" unique_id=1879321661]
-layout_mode = 2
-text = "Lead Developers"
-horizontal_alignment = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control2/HBoxContainer/VBoxContainer/VBoxContainer2" unique_id=1347061609]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="Label3" type="Label" parent="MarginContainer/Control2/HBoxContainer/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=1040590629]
-layout_mode = 2
-text = "mawji"
-horizontal_alignment = 1
-
-[node name="Label2" type="Label" parent="MarginContainer/Control2/HBoxContainer/VBoxContainer/VBoxContainer2/VBoxContainer" unique_id=2033886013]
-layout_mode = 2
-text = "Alyx"
-horizontal_alignment = 1
-
-[node name="HSeparator2" type="HSeparator" parent="MarginContainer/Control2/HBoxContainer/VBoxContainer" unique_id=491463537]
-custom_minimum_size = Vector2(36, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/Control2/HBoxContainer/VBoxContainer" unique_id=1527135742]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MarginContainer/Control2/HBoxContainer/VBoxContainer/VBoxContainer3" unique_id=1855634677]
-layout_mode = 2
-text = "Developers"
-horizontal_alignment = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control2/HBoxContainer/VBoxContainer/VBoxContainer3" unique_id=1472051401]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="Label2" type="Label" parent="MarginContainer/Control2/HBoxContainer/VBoxContainer/VBoxContainer3/VBoxContainer" unique_id=998991175]
-layout_mode = 2
-text = "Crunchitect"
-horizontal_alignment = 1
-
-[node name="HSeparator3" type="HSeparator" parent="MarginContainer/Control2/HBoxContainer/VBoxContainer" unique_id=961737622]
 custom_minimum_size = Vector2(36, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -162,7 +113,7 @@ theme_override_constants/separation = 0
 
 [node name="Label2" type="Label" parent="MarginContainer/Control2/HBoxContainer/VBoxContainer/VBoxContainer4/VBoxContainer" unique_id=1716799543]
 layout_mode = 2
-text = "Tsuwuki"
+text = "Louis"
 horizontal_alignment = 1
 
 [node name="HSeparator4" type="HSeparator" parent="MarginContainer/Control2/HBoxContainer/VBoxContainer" unique_id=1923886537]

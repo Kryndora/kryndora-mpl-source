@@ -197,7 +197,7 @@ public sealed partial class Properties : TabContainer
 
 			Label title = new()
 			{
-				Text = type.Name,
+				Text = type.Name.EndsWith("Kryndora") ? type.Name[..^"Kryndora".Length] : type.Name,
 				TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis,
 				CustomMinimumSize = new(0, 18),
 				SizeFlagsHorizontal = SizeFlags.ExpandFill,
