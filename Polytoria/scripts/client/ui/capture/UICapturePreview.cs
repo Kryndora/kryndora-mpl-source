@@ -23,7 +23,7 @@ public partial class UICapturePreview : Control
 	[Export] private AnimationPlayer _animPlay = null!;
 	[Export] private AnimationPlayer _shareAnimPlay = null!;
 
-	private CaptureService _capture = null!;
+	private CaptureServiceKryndora _capture = null!;
 
 	public override void _Ready()
 	{

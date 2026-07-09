@@ -119,7 +119,7 @@ public sealed partial class World : Instance
 	public InsertService Insert => FindChild<InsertService>("Insert")!;
 	public PurchasesService Purchases => FindChild<PurchasesService>("Purchases")!;
 	public TweenServiceKryndora Tween => FindChild<TweenServiceKryndora>("Tween")!;
-	public CaptureService Capture => FindChild<CaptureService>("Capture")!;
+	public CaptureServiceKryndora Capture => FindChild<CaptureServiceKryndora>("Capture")!;
 	public PresenceService Presence => FindChild<PresenceService>("Presence")!;
 	public PreferencesService Preferences => FindChild<PreferencesService>("Preferences")!;
 	public IOService IO => FindChild<IOService>("IO")!;
@@ -723,10 +723,10 @@ public sealed partial class World : Instance
 			purchasesService.NetworkParent = this;
 		}
 
-		CaptureService? captureService = FindChild<CaptureService>("Capture");
+		CaptureServiceKryndora? captureService = FindChild<CaptureServiceKryndora>("Capture");
 		if (captureService == null)
 		{
-			captureService = Globals.LoadInstance<CaptureService>(Root);
+			captureService = Globals.LoadInstance<CaptureServiceKryndora>(Root);
 			captureService.NameOverride = "Capture";
 			captureService.NetworkParent = this;
 		}
