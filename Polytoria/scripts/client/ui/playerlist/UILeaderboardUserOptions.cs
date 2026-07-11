@@ -64,14 +64,14 @@ public partial class UILeaderboardUserOptions : Control
 	private void OnAddFriend()
 	{
 		if (Target == null) return;
-		_root.Social.LocalSendFriendshipRequest(Target.TargetPlayer, Datamodel.Services.SocialService.FriendshipRequestType.Friend);
+		_root.Social.LocalSendFriendshipRequest(Target.TargetPlayer, Datamodel.Services.SocialServiceKryndora.FriendshipRequestType.Friend);
 		Disappear();
 	}
 
 	private void OnRemoveFriend()
 	{
 		if (Target == null) return;
-		_root.Social.LocalSendFriendshipRequest(Target.TargetPlayer, Datamodel.Services.SocialService.FriendshipRequestType.Unfriend);
+		_root.Social.LocalSendFriendshipRequest(Target.TargetPlayer, Datamodel.Services.SocialServiceKryndora.FriendshipRequestType.Unfriend);
 		Disappear();
 	}
 
