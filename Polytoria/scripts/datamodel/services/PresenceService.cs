@@ -206,7 +206,7 @@ public sealed partial class PresenceService : Instance
 		{
 			State = Root.SessionType == World.SessionTypeEnum.Creator
 				? ""
-				: _state != null ? FilterService.Filter(_state) : "",
+				: _state != null ? FilterServiceKryndora.Filter(_state) : "",
 			Details = details,
 			Timestamps =
 			{

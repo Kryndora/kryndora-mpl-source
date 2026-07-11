@@ -108,7 +108,7 @@ public sealed partial class World : Instance
 	public PlayerGUI PlayerGUI => FindChild<PlayerGUI>("PlayerGUI")!;
 	public ChatService Chat => FindChild<ChatService>("Chat")!;
 	public InputService Input => FindChild<InputService>("Input")!;
-	public FilterService Filter => FindChild<FilterService>("Filter")!;
+	public FilterServiceKryndora Filter => FindChild<FilterServiceKryndora>("Filter")!;
 	public AssetsServiceKryndora Assets => FindChild<AssetsServiceKryndora>("Assets")!;
 	public AchievementsService Achievements => FindChild<AchievementsService>("Achievements")!;
 	public CoreUIServiceKryndora CoreUI => FindChild<CoreUIServiceKryndora>("CoreUI")!;
@@ -638,11 +638,11 @@ public sealed partial class World : Instance
 			chatService.NetworkParent = this;
 		}
 
-		FilterService? filterService = FindChild<FilterService>("Filter");
+		FilterServiceKryndora? filterService = FindChild<FilterServiceKryndora>("Filter");
 
 		if (filterService == null)
 		{
-			filterService = Globals.LoadInstance<FilterService>(Root);
+			filterService = Globals.LoadInstance<FilterServiceKryndora>(Root);
 			filterService.NameOverride = "Filter";
 			filterService.NetworkParent = this;
 		}

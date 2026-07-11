@@ -77,7 +77,7 @@ public sealed partial class ChatService : Instance
 	private void OnPlayerRemoved(Player plr)
 	{
 		_playerToRateLimiter.Remove(plr);
-		FilterService.ClearContext(plr.UserID);
+		FilterServiceKryndora.ClearContext(plr.UserID);
 	}
 
 	public void SendChatMessage(string msgContent)
@@ -107,8 +107,8 @@ public sealed partial class ChatService : Instance
 		}
 
 		string filteredContent = player != null
-			? FilterService.FilterForPlayer(player.UserID, msgContent)
-			: FilterService.Filter(msgContent);
+			? FilterServiceKryndora.FilterForPlayer(player.UserID, msgContent)
+			: FilterServiceKryndora.Filter(msgContent);
 
 		if (player != null)
 		{
