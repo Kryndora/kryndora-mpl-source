@@ -1000,10 +1000,19 @@ public partial class NPC : Physical
 		// stick and stones
 		// this is needed because GetPath doesn't update when it entered tree
 		await Globals.Singleton.WaitFrame();
-		_toolRemoteTransform.Position = new Vector3(0, 0, 0);
-		_toolRemoteTransform.RotationDegrees = new Vector3(0, -90, -90);
+		_toolRemoteTransform.Position = tool.GripPosition;
+		_toolRemoteTransform.RotationDegrees = tool.GripRotation;
 		_toolRemoteTransform.UpdateScale = false;
 		_toolRemoteTransform.RemotePath = _toolRemoteTransform.GetPathTo(tool.GDNode);
+	}
+
+	public void RefreshToolGrip(Tool tool)
+	{
+		if (HoldingTool == tool && _toolRemoteTransform != null && Node.IsInstanceValid(_toolRemoteTransform))
+		{
+			_toolRemoteTransform.Position = tool.GripPosition;
+			_toolRemoteTransform.RotationDegrees = tool.GripRotation;
+		}
 	}
 
 	internal void InternalDetachTool()

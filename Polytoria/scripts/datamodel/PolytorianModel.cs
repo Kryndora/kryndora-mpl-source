@@ -73,6 +73,11 @@ public sealed partial class PolytorianModel : CharacterModel
 	private bool _bodyOverrided = false;
 	private CharacterAnimHelper _helper = null!;
 	private readonly Dictionary<CharacterAttachmentEnum, Dynamic> _attachmentEnumToDyn = [];
+	private Node3D? _customHandAttachment;
+	private CustomAvatarDriver? _customDriver;
+	private bool _forceHoldPose;
+	private static readonly Vector3 CustomHandAttachmentOffset = new(0f, 4f, 0f);
+	private static readonly Vector3 CustomHandAttachmentRotation = new(0f, 180f, -180f);
 	private PackedScene? _bodyPkScene;
 	private bool _updateClothDirty = false;
 	private string _bodyStyle = "default";
@@ -702,7 +707,10 @@ public sealed partial class PolytorianModel : CharacterModel
 					CustomAvatarDriver driver = new();
 					_customAvatar.AddChild(driver);
 					driver.Setup(ap, _customAvatar, this);
+					driver.ForceHoldPose = _forceHoldPose;
+					_customDriver = driver;
 					ApplyTestAvatarMaterials(_customAvatar, _shirtStyle == "kryndora");
+					SetupCustomHandAttachment();
 				}
 			}
 		}
@@ -713,7 +721,40 @@ public sealed partial class PolytorianModel : CharacterModel
 				_customAvatar.QueueFree();
 				_customAvatar = null;
 			}
+			_customHandAttachment = null;
+			_attachmentEnumToDyn.Remove(CharacterAttachmentEnum.HandRight);
 		}
+	}
+
+	private void SetupCustomHandAttachment()
+	{
+		if (_customAvatar == null) return;
+		Skeleton3D? skeleton = FindSkeleton(_customAvatar);
+		if (skeleton == null || skeleton.FindBone("RArm") == -1) return;
+
+		BoneAttachment3D attach = new() { BoneName = "RArm" };
+		skeleton.AddChild(attach);
+
+		Node3D point = new()
+		{
+			Position = CustomHandAttachmentOffset,
+			RotationDegrees = CustomHandAttachmentRotation
+		};
+		attach.AddChild(point);
+
+		_customHandAttachment = point;
+		_attachmentEnumToDyn.Remove(CharacterAttachmentEnum.HandRight);
+	}
+
+	private static Skeleton3D? FindSkeleton(Node node)
+	{
+		if (node is Skeleton3D skeleton) return skeleton;
+		foreach (Node child in node.GetChildren())
+		{
+			Skeleton3D? found = FindSkeleton(child);
+			if (found != null) return found;
+		}
+		return null;
 	}
 
 	private static AnimationPlayer? FindAnimPlayer(Node node)
@@ -725,6 +766,12 @@ public sealed partial class PolytorianModel : CharacterModel
 			if (r != null) return r;
 		}
 		return null;
+	}
+
+	public void SetForceHoldPose(bool value)
+	{
+		_forceHoldPose = value;
+		if (_customDriver != null) _customDriver.ForceHoldPose = value;
 	}
 
 	private void ApplyTestAvatarMaterials(Node root, bool withShirt)
@@ -1301,7 +1348,9 @@ public sealed partial class PolytorianModel : CharacterModel
 			CharacterAttachmentEnum.ElbowLeft => GDNode.GetNode<Node3D>("Character/Poly/Skeleton3D/O_LowerArm_L/LeftElbowAttachment"),
 			CharacterAttachmentEnum.ElbowRight => GDNode.GetNode<Node3D>("Character/Poly/Skeleton3D/O_LowerArm_R/RightElbowAttachment"),
 			CharacterAttachmentEnum.HandLeft => GDNode.GetNode<Node3D>("Character/Poly/Skeleton3D/O_Hand_L/LeftHandAttachment"),
-			CharacterAttachmentEnum.HandRight => GDNode.GetNode<Node3D>("Character/Poly/Skeleton3D/O_Hand_R/RightHandAttachment"),
+			CharacterAttachmentEnum.HandRight => (IsTestBody && _customHandAttachment != null && Node.IsInstanceValid(_customHandAttachment))
+				? _customHandAttachment
+				: GDNode.GetNode<Node3D>("Character/Poly/Skeleton3D/O_Hand_R/RightHandAttachment"),
 			CharacterAttachmentEnum.LegLeft => GDNode.GetNode<Node3D>("Character/Poly/Skeleton3D/O_UpperLeg_L/LeftLegAttachment"),
 			CharacterAttachmentEnum.LegRight => GDNode.GetNode<Node3D>("Character/Poly/Skeleton3D/O_UpperLeg_R/RightLegAttachment"),
 			CharacterAttachmentEnum.KneeLeft => GDNode.GetNode<Node3D>("Character/Poly/Skeleton3D/O_LowerLeg_L/LeftKneeAttachment"),

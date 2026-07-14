@@ -6,6 +6,7 @@ using Godot;
 using Polytoria.Attributes;
 using Polytoria.Creator.Managers;
 using Polytoria.Creator.Settings;
+using Polytoria.Creator.Utils;
 using Polytoria.Datamodel;
 using Polytoria.Datamodel.Creator;
 using Polytoria.Datamodel.Interfaces;
@@ -32,6 +33,11 @@ public partial class ExplorerItemContextMenu : ContextMenu
 			if (Target is Dynamic dyn)
 			{
 				AddIconItem("camera", "Go To", 5);
+				AddSeparator();
+			}
+			if (Target is Tool && PolyCreatorAPI.UserID == 3)
+			{
+				AddIconItem("edit", "Edit Grip", 60);
 				AddSeparator();
 			}
 			if (Target.LinkedModel != null)
@@ -94,6 +100,11 @@ public partial class ExplorerItemContextMenu : ContextMenu
 
 		switch (id)
 		{
+			case 60: // Edit Grip
+				{
+					if (Target is Tool gripTool) GripEditSession.Start(gripTool);
+					break;
+				}
 			case 1: // Add child
 				{
 					CreatorService.Interface.OpenInsertMenu(Target);

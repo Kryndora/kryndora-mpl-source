@@ -13,7 +13,7 @@ namespace Polytoria.Datamodel.Data;
 public partial class Datastore : IScriptObject
 {
 	private string _dsKey = null!;
-	public DatastoreService DatastoreService { get; set; } = null!;
+	public DatastoreServiceKryndora DatastoreService { get; set; } = null!;
 
 	public IDatastoreProvider Provider { get; set; } = null!;
 

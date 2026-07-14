@@ -12,13 +12,13 @@ namespace Polytoria.Client.UI;
 public partial class UIGameMenu : Control
 {
 	public Vector2 GameMenuSize = new(900, 560);
-	private static readonly Color OverlayColor = new(0.02f, 0.06f, 0.09f, 0.64f);
-	private static readonly Color PanelColor = new(0.035f, 0.065f, 0.10f, 0.98f);
-	private static readonly Color SurfaceColor = new(0.055f, 0.095f, 0.14f, 1f);
-	private static readonly Color SurfaceHoverColor = new(0.075f, 0.14f, 0.20f, 1f);
-	private static readonly Color AccentColor = new(0.14f, 0.82f, 0.90f, 1f);
-	private static readonly Color AccentDarkColor = new(0.03f, 0.30f, 0.40f, 1f);
-	private static readonly Color LineColor = new(0.16f, 0.30f, 0.40f, 1f);
+	private static readonly Color OverlayColor = new(0.02f, 0.02f, 0.03f, 0.64f);
+	private static readonly Color PanelColor = new(0.055f, 0.055f, 0.06f, 0.98f);
+	private static readonly Color SurfaceColor = new(0.086f, 0.086f, 0.094f, 1f);
+	private static readonly Color SurfaceHoverColor = new(0.16f, 0.16f, 0.17f, 1f);
+	private static readonly Color AccentColor = new(0.941f, 0.945f, 0.961f, 1f);
+	private static readonly Color AccentDarkColor = new(0.16f, 0.16f, 0.17f, 1f);
+	private static readonly Color LineColor = new(0.22f, 0.22f, 0.24f, 1f);
 	private readonly Dictionary<GameMenuViewEnum, UIMenuViewBase> _loadedViews = [];
 	private UIMenuViewBase? _currentView = null;
 
@@ -194,9 +194,9 @@ public partial class UIGameMenu : Control
 
 		button.CustomMinimumSize = new Vector2(0, 64);
 		button.AddThemeStyleboxOverride("normal", Box(new Color(0.025f, 0.045f, 0.07f, 0.0f), 14));
-		button.AddThemeStyleboxOverride("hover", Box(SurfaceHoverColor, 14, new Color(0.10f, 0.35f, 0.46f), 1));
+		button.AddThemeStyleboxOverride("hover", Box(SurfaceHoverColor, 14, new Color(0.3f, 0.3f, 0.32f), 1));
 		button.AddThemeStyleboxOverride("pressed", Box(AccentDarkColor, 14, AccentColor, 1));
-		button.AddThemeStyleboxOverride("focus", Box(new Color(0, 0, 0, 0), 14, AccentColor, 2));
+		button.AddThemeStyleboxOverride("focus", Box(new Color(0, 0, 0, 0), 14));
 		button.AddThemeFontSizeOverride("font_size", 21);
 
 		if (button.GetNodeOrNull<HBoxContainer>("Layout") is HBoxContainer layout)
@@ -213,7 +213,7 @@ public partial class UIGameMenu : Control
 		if (button.GetNodeOrNull<TextureRect>("Layout/TextureRect") is TextureRect icon)
 		{
 			icon.CustomMinimumSize = new Vector2(24, 0);
-			icon.SelfModulate = new Color(0.80f, 0.95f, 1f, 1f);
+			icon.SelfModulate = new Color(0.9f, 0.9f, 0.9f, 1f);
 		}
 
 		if (button.GetNodeOrNull<Label>("Layout/Label") is Label label)
@@ -244,13 +244,13 @@ public partial class UIGameMenu : Control
 		if (view.GetNodeOrNull<TextureRect>("PlaceBackground") is TextureRect place)
 		{
 			place.CustomMinimumSize = new Vector2(0, 190);
-			place.SelfModulate = new Color(0.62f, 0.78f, 0.86f, 0.92f);
+			place.SelfModulate = new Color(0.72f, 0.72f, 0.72f, 0.92f);
 		}
 
 		if (view.GetNodeOrNull<Label>("PlaceBackground/PlaceInfo/PlaceType") is Label typeLabel)
 		{
 			typeLabel.Text = "KRYNDORA SESSION";
-			typeLabel.Modulate = new Color(0.58f, 0.92f, 1f, 0.75f);
+			typeLabel.Modulate = new Color(0.7f, 0.7f, 0.7f, 0.75f);
 			typeLabel.AddThemeFontSizeOverride("font_size", 13);
 		}
 
@@ -267,7 +267,7 @@ public partial class UIGameMenu : Control
 		if (view.GetNodeOrNull<Label>("PanelContainer/Layout/Layout/Label") is Label statsLabel)
 		{
 			statsLabel.Text = "Session Stats";
-			statsLabel.AddThemeColorOverride("font_color", new Color(0.72f, 0.88f, 0.96f));
+			statsLabel.AddThemeColorOverride("font_color", new Color(0.8f, 0.8f, 0.8f));
 			statsLabel.AddThemeFontSizeOverride("font_size", 16);
 		}
 
@@ -277,8 +277,8 @@ public partial class UIGameMenu : Control
 		}
 
 		StyleActionButton(view.GetNodeOrNull<Button>("Panel/ActionMenu/Screenshot"), "Capture", AccentColor);
-		StyleActionButton(view.GetNodeOrNull<Button>("Panel/ActionMenu/Respawn"), "Respawn", new Color(0.45f, 0.88f, 0.58f));
-		StyleActionButton(view.GetNodeOrNull<Button>("Panel/ActionMenu/Leave"), "Exit", new Color(1.0f, 0.44f, 0.48f));
+		StyleActionButton(view.GetNodeOrNull<Button>("Panel/ActionMenu/Respawn"), "Respawn", AccentColor);
+		StyleActionButton(view.GetNodeOrNull<Button>("Panel/ActionMenu/Leave"), "Exit", AccentColor);
 
 		if (view.GetNodeOrNull<Button>("PlaceBackground/ReportButton") is Button report)
 		{
@@ -318,7 +318,7 @@ public partial class UIGameMenu : Control
 		if (button.GetNodeOrNull<TextureRect>("Layout/TextureRect") is TextureRect icon)
 		{
 			icon.CustomMinimumSize = new Vector2(24, 0);
-			icon.SelfModulate = new Color(0.88f, 0.96f, 1f, 1f);
+			icon.SelfModulate = new Color(0.9f, 0.9f, 0.9f, 1f);
 		}
 
 		if (button.GetNodeOrNull<Label>("Layout/Label") is Label label)

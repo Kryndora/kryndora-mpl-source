@@ -3,6 +3,8 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using Godot;
+using Polytoria.Datamodel;
+using Polytoria.Datamodel.Services;
 
 namespace Polytoria.Client.UI.Notification;
 
@@ -12,16 +14,22 @@ public partial class UIFriendRequestNotification : UINotificationBase
 	[Export] private TextureRect _iconRect = null!;
 	[Export] private Button _viewButton = null!;
 
+	private const string NameLabelPath = "Control/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer/Label2";
+	private const string AcceptButtonPath = "Control/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/Save";
+	private const string IgnoreButtonPath = "Control/Control/Panel/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/View";
+
 	public override void Fire(object? data)
 	{
-		if (data is FriendRequestNotifyPayload)
+		if (data is FriendRequestNotifyPayload payload)
 		{
-			//_iconRect.Texture = payload.Icon;
+			GetNode<Label>(NameLabelPath).Text = payload.FromName;
+
+			int fromId = payload.FromUserId;
+			string fromName = payload.FromName;
+			GetNode<Button>(AcceptButtonPath).Pressed += () => OnAccept(fromId, fromName);
+			GetNode<Button>(IgnoreButtonPath).Pressed += QueueFree;
+
 			_animPlay.Play("appear");
-
-			//World game = NotificationCenter.CoreUI.Root;
-
-			//_viewButton.Pressed += game.Capture.ViewCurrentPhoto;
 		}
 		else
 		{
@@ -29,7 +37,16 @@ public partial class UIFriendRequestNotification : UINotificationBase
 		}
 	}
 
+	private void OnAccept(int fromUserId, string fromName)
+	{
+		NotificationCenter.CoreUI.Root.Social.LocalAcceptFriendRequest(fromUserId);
+		NotificationCenter.FireMessage("You are now friends with " + fromName + "!", "New Friend");
+		QueueFree();
+	}
+
 	public struct FriendRequestNotifyPayload()
 	{
+		public int FromUserId = 0;
+		public string FromName = "";
 	}
 }

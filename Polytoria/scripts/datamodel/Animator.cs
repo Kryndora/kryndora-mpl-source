@@ -42,6 +42,8 @@ public partial class Animator : Instance
 	private readonly HashSet<string> _impluseOneShots = [];
 	private int _customAnimCounter = 0;
 
+	public event System.Action<string>? OneShotStarted;
+
 	public float BlendSpeed = 10f;
 
 	[SyncVar]
@@ -530,6 +532,9 @@ public partial class Animator : Instance
 	private async void NetPlayOneShotAnimation(string animationKey)
 	{
 		if (!AnimationList.Contains(animationKey)) { return; }
+
+		OneShotStarted?.Invoke(animationKey);
+
 		string filteredAnimKey = animationKey.Replace('/', '_');
 
 		string oneshotPath = "parameters/" + filteredAnimKey + "_oneshot";

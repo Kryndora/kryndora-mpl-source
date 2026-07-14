@@ -347,11 +347,7 @@ public sealed partial class Player : NPC
 	// Emotes visible in emote wheel
 	public static readonly string[] EmoteWheelList =
 	[
-		"wave",
 		"dance",
-		"helicopter",
-		"sit",
-		"dance2",
 	];
 
 	// List of all emotes

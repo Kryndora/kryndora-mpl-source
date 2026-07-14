@@ -598,7 +598,23 @@ public partial class Dynamic : Instance
 
 	internal void UpdateTransformFromNet(Transform3D transform, bool isReliable, bool lerpTransform)
 	{
-		if (OverrideNetworkTransform) return;
+		if (OverrideNetworkTransform)
+		{
+			if (Root != null && Root.Network != null && !Root.Network.IsServer)
+			{
+				Vector3 netScale = new Vector3(
+					transform.Basis.Column0.Length(),
+					transform.Basis.Column1.Length(),
+					transform.Basis.Column2.Length()
+				).SanitizeNaN();
+				Vector3 newNodeSize = netScale * GetParentScale();
+				if (!newNodeSize.IsEqualApprox(NodeSize))
+				{
+					NodeSize = newNodeSize;
+				}
+			}
+			return;
+		}
 		_netTransform = transform;
 		_isDirty = true;
 

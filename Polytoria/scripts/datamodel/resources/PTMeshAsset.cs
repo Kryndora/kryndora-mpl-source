@@ -12,7 +12,7 @@ public partial class PTMeshAsset : MeshAsset
 {
 	private uint _assetID;
 
-	[Editable, ScriptProperty]
+	[Editable, ScriptProperty, SyncVar]
 	public uint AssetID
 	{
 		get => _assetID;

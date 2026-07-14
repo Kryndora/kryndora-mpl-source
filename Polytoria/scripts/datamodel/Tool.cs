@@ -14,12 +14,14 @@ using System.Linq;
 
 namespace Polytoria.Datamodel;
 
-[Instantiable]
+[Instantiable, PhysicalRootStop]
 public sealed partial class Tool : RigidBody
 {
 	private bool _droppable = true;
 	private ImageAsset? _iconImage;
 	private NPC? _holder = null;
+	private Vector3 _gripPosition = Vector3.Zero;
+	private Vector3 _gripRotation = new(0f, -90f, -90f);
 
 	[Editable, ScriptProperty]
 	public bool Droppable
@@ -29,6 +31,30 @@ public sealed partial class Tool : RigidBody
 		{
 			_droppable = value;
 			OnPropertyChanged();
+		}
+	}
+
+	[Editable, ScriptProperty, SyncVar]
+	public Vector3 GripPosition
+	{
+		get => _gripPosition;
+		set
+		{
+			_gripPosition = value;
+			OnPropertyChanged();
+			_holder?.RefreshToolGrip(this);
+		}
+	}
+
+	[Editable, ScriptProperty, SyncVar]
+	public Vector3 GripRotation
+	{
+		get => _gripRotation;
+		set
+		{
+			_gripRotation = value;
+			OnPropertyChanged();
+			_holder?.RefreshToolGrip(this);
 		}
 	}
 
@@ -108,8 +134,11 @@ public sealed partial class Tool : RigidBody
 		ToolImgTextureLoaded?.Invoke();
 	}
 
+	internal bool DisableAutoEquip;
+
 	private void OnToolTouched(Physical physical)
 	{
+		if (DisableAutoEquip) return;
 		if (physical is NPC npc)
 		{
 			if (_holder == null && Parent is not Inventory && Parent is not Player)

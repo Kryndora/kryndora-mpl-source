@@ -55,6 +55,9 @@ public sealed partial class ChatService : Instance
 
 	private readonly Dictionary<Player, SlidingWindowRateLimiter> _playerToRateLimiter = [];
 
+	private readonly Dictionary<int, int> _filteredMessageCount = [];
+	private const int WarnEveryFilteredMessages = 3;
+
 	static ChatService()
 	{
 		if (!Globals.GDAvailable) return;
@@ -77,6 +80,7 @@ public sealed partial class ChatService : Instance
 	private void OnPlayerRemoved(Player plr)
 	{
 		_playerToRateLimiter.Remove(plr);
+		_filteredMessageCount.Remove(plr.UserID);
 		FilterServiceKryndora.ClearContext(plr.UserID);
 	}
 
@@ -112,6 +116,16 @@ public sealed partial class ChatService : Instance
 
 		if (player != null)
 		{
+			if (!player.IsAdmin && filteredContent != msgContent)
+			{
+				int filteredCount = _filteredMessageCount.TryGetValue(player.UserID, out int prev) ? prev + 1 : 1;
+				_filteredMessageCount[player.UserID] = filteredCount;
+				if (filteredCount % WarnEveryFilteredMessages == 0)
+				{
+					RpcId(peerID, nameof(NetWarnFilteredLanguage));
+				}
+			}
+
 			if (!player.IsAdmin)
 			{
 				// Escape BBCode
@@ -179,6 +193,12 @@ public sealed partial class ChatService : Instance
 	private void NetMessageDeclined()
 	{
 		MessageDeclined.Invoke();
+	}
+
+	[NetRpc(AuthorityMode.Server, TransferMode = TransferMode.Reliable, TransferChannel = 2)]
+	private void NetWarnFilteredLanguage()
+	{
+		Polytoria.Client.UI.ChatWarningUI.Instance?.ShowWarning();
 	}
 
 	[NetRpc(AuthorityMode.Server, TransferMode = TransferMode.Reliable, TransferChannel = 2)]

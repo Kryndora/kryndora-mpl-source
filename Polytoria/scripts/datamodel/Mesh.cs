@@ -34,7 +34,7 @@ public sealed partial class Mesh : Entity
 	private readonly List<Material> _materials = [];
 	private Resource? _prevResource;
 
-	[Editable, ScriptProperty]
+	[Editable, ScriptProperty, SyncVar]
 	public MeshAsset? Asset
 	{
 		get => _asset;

@@ -60,8 +60,9 @@ public partial class CoreUIRoot : CanvasLayer
 
 		AddChild(Polytoria.Shared.Globals.CreateInstanceFromScene<Node>("res://scenes/client/ui/executor/executor.tscn"));
 		
-		AddChild(new Polytoria.Client.Admin.AdminPanelUI());
+		AddChild(Polytoria.Shared.Globals.CreateInstanceFromScene<Node>("res://scenes/client/ui/admin/admin_panel.tscn"));
 		AddChild(Polytoria.Shared.Globals.CreateInstanceFromScene<Node>("res://scenes/client/ui/console/kryndora_developer_console.tscn"));
+		AddChild(Polytoria.Shared.Globals.CreateInstanceFromScene<Node>("res://scenes/client/ui/warning/chat_warning.tscn"));
 
 		base._EnterTree();
 	}

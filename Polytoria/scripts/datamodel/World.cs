@@ -110,17 +110,17 @@ public sealed partial class World : Instance
 	public InputService Input => FindChild<InputService>("Input")!;
 	public FilterServiceKryndora Filter => FindChild<FilterServiceKryndora>("Filter")!;
 	public AssetsServiceKryndora Assets => FindChild<AssetsServiceKryndora>("Assets")!;
-	public AchievementsService Achievements => FindChild<AchievementsService>("Achievements")!;
+	public AchievementsServiceKryndora Achievements => FindChild<AchievementsServiceKryndora>("Achievements")!;
 	public CoreUIServiceKryndora CoreUI => FindChild<CoreUIServiceKryndora>("CoreUI")!;
 	public Stats Stats => FindChild<Stats>("Stats")!;
 	public Teams Teams => FindChild<Teams>("Teams")!;
-	public DatastoreService Datastore => FindChild<DatastoreService>("Datastore")!;
+	public DatastoreServiceKryndora Datastore => FindChild<DatastoreServiceKryndora>("Datastore")!;
 	public HttpService Http => FindChild<HttpService>("Http")!;
 	public InsertService Insert => FindChild<InsertService>("Insert")!;
 	public PurchasesService Purchases => FindChild<PurchasesService>("Purchases")!;
 	public TweenServiceKryndora Tween => FindChild<TweenServiceKryndora>("Tween")!;
 	public CaptureServiceKryndora Capture => FindChild<CaptureServiceKryndora>("Capture")!;
-	public PresenceService Presence => FindChild<PresenceService>("Presence")!;
+	public PresenceServiceKryndora Presence => FindChild<PresenceServiceKryndora>("Presence")!;
 	public PreferencesServiceKryndora Preferences => FindChild<PreferencesServiceKryndora>("Preferences")!;
 	public IOService IO => FindChild<IOService>("IO")!;
 	public WorldsService Worlds => FindChild<WorldsService>("Worlds")!;
@@ -659,10 +659,10 @@ public sealed partial class World : Instance
 		}
 #endif
 
-		AchievementsService? achievementsService = FindChild<AchievementsService>("Achievements");
+		AchievementsServiceKryndora? achievementsService = FindChild<AchievementsServiceKryndora>("Achievements");
 		if (achievementsService == null)
 		{
-			achievementsService = Globals.LoadInstance<AchievementsService>(Root);
+			achievementsService = Globals.LoadInstance<AchievementsServiceKryndora>(Root);
 			achievementsService.NameOverride = "Achievements";
 			achievementsService.NetworkParent = this;
 		}
@@ -691,10 +691,10 @@ public sealed partial class World : Instance
 			teams.NetworkParent = this;
 		}
 
-		DatastoreService? datastoreService = FindChild<DatastoreService>("Datastore");
+		DatastoreServiceKryndora? datastoreService = FindChild<DatastoreServiceKryndora>("Datastore");
 		if (datastoreService == null)
 		{
-			datastoreService = Globals.LoadInstance<DatastoreService>(Root);
+			datastoreService = Globals.LoadInstance<DatastoreServiceKryndora>(Root);
 			datastoreService.NameOverride = "Datastore";
 			datastoreService.NetworkParent = this;
 		}
@@ -731,10 +731,10 @@ public sealed partial class World : Instance
 			captureService.NetworkParent = this;
 		}
 
-		PresenceService? presenceService = FindChild<PresenceService>("Presence");
+		PresenceServiceKryndora? presenceService = FindChild<PresenceServiceKryndora>("Presence");
 		if (presenceService == null)
 		{
-			presenceService = Globals.LoadInstance<PresenceService>(Root);
+			presenceService = Globals.LoadInstance<PresenceServiceKryndora>(Root);
 			presenceService.NameOverride = "Presence";
 			presenceService.NetworkParent = this;
 		}
