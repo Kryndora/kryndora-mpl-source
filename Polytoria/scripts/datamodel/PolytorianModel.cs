@@ -783,21 +783,45 @@ public sealed partial class PolytorianModel : CharacterModel
 		{
 			Material? cur = mesh.Mesh.SurfaceGetMaterial(i);
 			string name = cur?.ResourceName ?? "";
-			if (name.Contains("Torso") || name.Contains("Arm"))
+			if (name.Contains("Torso"))
 			{
-				mesh.SetSurfaceOverrideMaterial(i, shirt != null ? new StandardMaterial3D { AlbedoTexture = shirt } : null);
+				mesh.SetSurfaceOverrideMaterial(i, TestBodyMaterial(_torsoMat.AlbedoColor, shirt));
 			}
-			else if (!name.Contains("Leg"))
+			else if (name.Contains("LeftArm"))
 			{
-				Color headColor = cur is BaseMaterial3D bm ? bm.AlbedoColor : new Color(0.85f, 0.85f, 0.9f);
+				mesh.SetSurfaceOverrideMaterial(i, TestBodyMaterial(_leftArmMat.AlbedoColor, shirt));
+			}
+			else if (name.Contains("RightArm"))
+			{
+				mesh.SetSurfaceOverrideMaterial(i, TestBodyMaterial(_rightArmMat.AlbedoColor, shirt));
+			}
+			else if (name.Contains("LeftLeg"))
+			{
+				mesh.SetSurfaceOverrideMaterial(i, TestBodyMaterial(_leftLegMat.AlbedoColor, null));
+			}
+			else if (name.Contains("RightLeg"))
+			{
+				mesh.SetSurfaceOverrideMaterial(i, TestBodyMaterial(_rightLegMat.AlbedoColor, null));
+			}
+			else
+			{
 				_customFaceMat.AlbedoTexture = _faceMat.AlbedoTexture;
 				_customFaceMat.Transparency = BaseMaterial3D.TransparencyEnum.Alpha;
 				_customFaceMat.Uv1Scale = new Vector3(0.85f, 0.85f, 1f);
 				_customFaceMat.Uv1Offset = new Vector3(0.075f, 0.115f, 0f);
-				StandardMaterial3D headMat = new() { AlbedoColor = headColor, NextPass = _customFaceMat };
+				StandardMaterial3D headMat = new() { AlbedoColor = _headMat.AlbedoColor, NextPass = _customFaceMat };
 				mesh.SetSurfaceOverrideMaterial(i, headMat);
 			}
 		}
+	}
+
+	private static StandardMaterial3D TestBodyMaterial(Color bodyColor, Texture2D? shirt)
+	{
+		if (shirt != null)
+		{
+			return new StandardMaterial3D { AlbedoTexture = shirt };
+		}
+		return new StandardMaterial3D { AlbedoColor = bodyColor };
 	}
 
 	private static MeshInstance3D? FindMeshInstance(Node node)

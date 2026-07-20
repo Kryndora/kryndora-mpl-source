@@ -2,21 +2,22 @@
 
 [ext_resource type="Script" uid="uid://v7fsh2u5c21a" path="res://scripts/client/executor/ExecutorUI.cs" id="1_a6j1y"]
 [ext_resource type="FontFile" uid="uid://clwbylh8y2lf2" path="res://assets/fonts/creator/JetBrainsMono-Regular.ttf" id="2_thy83"]
+[ext_resource type="Font" path="res://assets/fonts/default.tres" id="3_font"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
-bg_color = Color(0.109804, 0.117647, 0.133333, 1)
+bg_color = Color(0.094118, 0.094118, 0.094118, 1)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(0.18, 0.5, 0.95, 0.35)
-corner_radius_top_left = 14
-corner_radius_top_right = 14
-corner_radius_bottom_right = 14
-corner_radius_bottom_left = 14
+border_color = Color(0.16, 0.16, 0.16, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_code"]
-bg_color = Color(0.0627451, 0.0666667, 0.0784314, 1)
+bg_color = Color(0.078431, 0.078431, 0.078431, 1)
 content_margin_left = 12.0
 content_margin_top = 10.0
 content_margin_right = 12.0
@@ -25,53 +26,82 @@ border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(0.2, 0.215686, 0.247059, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+border_color = Color(0.16, 0.16, 0.16, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
-bg_color = Color(0.172549, 0.188235, 0.219608, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(0.164706, 0.164706, 0.164706, 1)
+border_width_bottom = 2
+border_color = Color(0.086275, 0.086275, 0.086275, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
-bg_color = Color(0.235294, 0.254902, 0.298039, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(0.211765, 0.211765, 0.211765, 1)
+border_width_bottom = 2
+border_color = Color(0.086275, 0.086275, 0.086275, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
-bg_color = Color(0.12549, 0.137255, 0.160784, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(0.129412, 0.129412, 0.129412, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_run_normal"]
-bg_color = Color(0.164706, 0.490196, 0.968627, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(0.941176, 0.945098, 0.960784, 1)
+border_width_bottom = 2
+border_color = Color(0.847059, 0.858824, 0.878431, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_run_hover"]
-bg_color = Color(0.235294, 0.54902, 0.988235, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(0.847059, 0.858824, 0.878431, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_focus"]
 
 [sub_resource type="Theme" id="Theme_gbck0"]
-default_font = ExtResource("2_thy83")
+default_font = ExtResource("3_font")
+Button/styles/focus = SubResource("StyleBoxEmpty_focus")
 Button/styles/hover = SubResource("StyleBoxFlat_btn_hover")
 Button/styles/normal = SubResource("StyleBoxFlat_btn_normal")
 Button/styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
-Button/font_sizes/font_size = 15
+Button/font_sizes/font_size = 14
 CodeEdit/styles/normal = SubResource("StyleBoxFlat_code")
 CodeEdit/font_sizes/font_size = 15
 
@@ -111,13 +141,13 @@ theme_override_constants/separation = 6
 
 [node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1002064851]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.337255, 0.901961, 1, 1)
-theme_override_font_sizes/font_size = 26
+theme_override_colors/font_color = Color(0.956863, 0.956863, 0.960784, 1)
+theme_override_font_sizes/font_size = 16
 text = "Kryndora Admin Executor"
 
 [node name="Subtitle" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1002064852]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.52, 0.57, 0.66, 1)
+theme_override_colors/font_color = Color(0.658824, 0.658824, 0.658824, 1)
 theme_override_font_sizes/font_size = 13
 text = "Run Luau with admin access  ·  press F9 to toggle"
 
@@ -129,6 +159,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(0, 320)
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("2_thy83")
 placeholder_text = "-- Write your Luau here..."
 gutters_draw_line_numbers = true
 
@@ -153,6 +184,11 @@ text = "Run Compat"
 [node name="Run" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1053468353]
 custom_minimum_size = Vector2(130, 46)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.066667, 0.070588, 0.078431, 1)
+theme_override_colors/font_hover_color = Color(0.066667, 0.070588, 0.078431, 1)
+theme_override_colors/font_pressed_color = Color(0.066667, 0.070588, 0.078431, 1)
+theme_override_colors/font_focus_color = Color(0.066667, 0.070588, 0.078431, 1)
 theme_override_styles/hover = SubResource("StyleBoxFlat_run_hover")
 theme_override_styles/normal = SubResource("StyleBoxFlat_run_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_run_normal")
 text = "Run"

@@ -19,16 +19,20 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q5m05"]
-bg_color = Color(0.12156863, 0.12156863, 0.12156863, 1)
+bg_color = Color(0.109804, 0.109804, 0.109804, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hover_tab"]
+bg_color = Color(0.141176, 0.141176, 0.141176, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xm7nd"]
-bg_color = Color(0.1254902, 0.5176471, 0.78431374, 0.6509804)
+bg_color = Color(0.164706, 0.164706, 0.164706, 1)
 
 [sub_resource type="Theme" id="Theme_e84r2"]
 BoxContainer/constants/separation = 0
 Button/font_sizes/font_size = 24
 Button/fonts/font = ExtResource("1_8o6pa")
 Button/styles/normal = SubResource("StyleBoxFlat_q5m05")
+Button/styles/hover = SubResource("StyleBoxFlat_hover_tab")
 Button/styles/pressed = SubResource("StyleBoxFlat_xm7nd")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6062u"]

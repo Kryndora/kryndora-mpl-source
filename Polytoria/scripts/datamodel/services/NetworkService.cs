@@ -1028,6 +1028,21 @@ public sealed partial class NetworkService : Instance
 		ScriptSync.SyncScriptsToPeer(RemoteSenderId);
 	}
 
+	public void RequestServerShutdown()
+	{
+		if (IsServer) return;
+		RpcId(1, nameof(NetAdminShutdown));
+	}
+
+	[NetRpc(AuthorityMode.Any, TransferMode = TransferMode.Reliable)]
+	private void NetAdminShutdown()
+	{
+		Player? requester = _players.GetPlayerFromPeerID(RemoteSenderId);
+		if (requester == null || !requester.IsAdmin) return;
+		PT.Print($"Server shutdown requested by admin userId {requester.UserID}");
+		ShutdownServer();
+	}
+
 	// Emit when localplayer is ready
 	public void OnLocalPlayerReady()
 	{
