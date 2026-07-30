@@ -88,6 +88,32 @@ public struct APIAvatarResponse
 	public string BodyStyle { get; set; }
 	[JsonPropertyName("shirtStyle")]
 	public string ShirtStyle { get; set; }
+	[JsonPropertyName("customAccessory")]
+	public APICustomAccessory CustomAccessory { get; set; }
+}
+
+public struct APICustomAccessory
+{
+	[JsonPropertyName("meshId")]
+	public int MeshId { get; set; }
+	[JsonPropertyName("px")]
+	public float Px { get; set; }
+	[JsonPropertyName("py")]
+	public float Py { get; set; }
+	[JsonPropertyName("pz")]
+	public float Pz { get; set; }
+	[JsonPropertyName("rx")]
+	public float Rx { get; set; }
+	[JsonPropertyName("ry")]
+	public float Ry { get; set; }
+	[JsonPropertyName("rz")]
+	public float Rz { get; set; }
+	[JsonPropertyName("sx")]
+	public float Sx { get; set; }
+	[JsonPropertyName("sy")]
+	public float Sy { get; set; }
+	[JsonPropertyName("sz")]
+	public float Sz { get; set; }
 }
 
 public struct APIAvatarAsset

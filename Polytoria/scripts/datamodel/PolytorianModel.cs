@@ -74,6 +74,7 @@ public sealed partial class PolytorianModel : CharacterModel
 	private CharacterAnimHelper _helper = null!;
 	private readonly Dictionary<CharacterAttachmentEnum, Dynamic> _attachmentEnumToDyn = [];
 	private Node3D? _customHandAttachment;
+	private Node3D? _customHeadAttachment;
 	private CustomAvatarDriver? _customDriver;
 	private bool _forceHoldPose;
 	private static readonly Vector3 CustomHandAttachmentOffset = new(0f, 4f, 0f);
@@ -669,7 +670,8 @@ public sealed partial class PolytorianModel : CharacterModel
 
 	private Node3D? _customAvatar;
 	private string? _shirtStyle;
-	private const string CustomAvatarScenePath = "res://assets/models/avatars/test/avatar.glb";
+	private const string KryndoraTestAvatarScenePath = "res://assets/models/avatars/test/avatar_kryndora.glb";
+	private const string KryndoraTestShirtPath = "res://assets/models/avatars/test/shirt_kryndora.png";
 
 	[SyncVar, ScriptProperty]
 	public string ShirtStyle
@@ -698,11 +700,13 @@ public sealed partial class PolytorianModel : CharacterModel
 			SetBlockyFaceVisible(false);
 			if (_customAvatar == null && Pivot != null)
 			{
-				PackedScene? scene = ResourceLoader.Load<PackedScene>(CustomAvatarScenePath);
+				PackedScene? scene = ResourceLoader.Load<PackedScene>(KryndoraTestAvatarScenePath);
 				if (scene != null)
 				{
 					_customAvatar = scene.Instantiate<Node3D>();
 					Pivot.AddChild(_customAvatar);
+					MeshInstance3D? bodyMesh = FindBodyMeshInstance(_customAvatar);
+					HideNonBodyMeshes(_customAvatar, bodyMesh);
 					AnimationPlayer? ap = FindAnimPlayer(_customAvatar);
 					CustomAvatarDriver driver = new();
 					_customAvatar.AddChild(driver);
@@ -711,6 +715,7 @@ public sealed partial class PolytorianModel : CharacterModel
 					_customDriver = driver;
 					ApplyTestAvatarMaterials(_customAvatar, _shirtStyle == "kryndora");
 					SetupCustomHandAttachment();
+					SetupCustomHeadAttachment();
 				}
 			}
 		}
@@ -722,6 +727,7 @@ public sealed partial class PolytorianModel : CharacterModel
 				_customAvatar = null;
 			}
 			_customHandAttachment = null;
+			_customHeadAttachment = null;
 			_attachmentEnumToDyn.Remove(CharacterAttachmentEnum.HandRight);
 		}
 	}
@@ -744,6 +750,25 @@ public sealed partial class PolytorianModel : CharacterModel
 
 		_customHandAttachment = point;
 		_attachmentEnumToDyn.Remove(CharacterAttachmentEnum.HandRight);
+	}
+
+	private void SetupCustomHeadAttachment()
+	{
+		if (_customAvatar == null) return;
+		Skeleton3D? skeleton = FindSkeleton(_customAvatar);
+		if (skeleton == null) return;
+
+		int headBone = -1;
+		foreach (string boneName in new[] { "Head", "head", "O_Head", "mixamorig:Head", "Neck", "neck" })
+		{
+			int b = skeleton.FindBone(boneName);
+			if (b != -1) { headBone = b; break; }
+		}
+		if (headBone == -1) return;
+
+		BoneAttachment3D attach = new() { BoneName = skeleton.GetBoneName(headBone) };
+		skeleton.AddChild(attach);
+		_customHeadAttachment = attach;
 	}
 
 	private static Skeleton3D? FindSkeleton(Node node)
@@ -776,9 +801,9 @@ public sealed partial class PolytorianModel : CharacterModel
 
 	private void ApplyTestAvatarMaterials(Node root, bool withShirt)
 	{
-		MeshInstance3D? mesh = FindMeshInstance(root);
+		MeshInstance3D? mesh = FindBodyMeshInstance(root);
 		if (mesh?.Mesh == null) return;
-		Texture2D? shirt = withShirt ? ResourceLoader.Load<Texture2D>("res://assets/models/avatars/test/shirt.png") : null;
+		Texture2D? shirt = withShirt ? ResourceLoader.Load<Texture2D>(KryndoraTestShirtPath) : null;
 		for (int i = 0; i < mesh.Mesh.GetSurfaceCount(); i++)
 		{
 			Material? cur = mesh.Mesh.SurfaceGetMaterial(i);
@@ -833,6 +858,32 @@ public sealed partial class PolytorianModel : CharacterModel
 			if (r != null) return r;
 		}
 		return null;
+	}
+
+	private static MeshInstance3D? FindBodyMeshInstance(Node node)
+	{
+		MeshInstance3D? best = null;
+		CollectBodyMesh(node, ref best);
+		return best;
+	}
+
+	private static void CollectBodyMesh(Node node, ref MeshInstance3D? best)
+	{
+		if (node is MeshInstance3D mi && mi.Mesh != null)
+		{
+			if (best == null || mi.Mesh.GetSurfaceCount() > best.Mesh.GetSurfaceCount())
+				best = mi;
+		}
+		foreach (Node c in node.GetChildren())
+			CollectBodyMesh(c, ref best);
+	}
+
+	private static void HideNonBodyMeshes(Node node, MeshInstance3D? body)
+	{
+		if (node is MeshInstance3D mi && mi != body)
+			mi.Visible = false;
+		foreach (Node c in node.GetChildren())
+			HideNonBodyMeshes(c, body);
 	}
 
 	private static string ResolveAvatarBodyStyle(APIAvatarResponse avatarData)
@@ -1360,6 +1411,13 @@ public sealed partial class PolytorianModel : CharacterModel
 		return dyn;
 	}
 
+	public Node3D GetBodyFollowNode()
+	{
+		if (_customHeadAttachment != null && Node.IsInstanceValid(_customHeadAttachment)) return _customHeadAttachment;
+		if (_customAvatar != null && Node.IsInstanceValid(_customAvatar)) return _customAvatar;
+		return (Node3D)GDNode;
+	}
+
 	public Node3D GetNode3DAttachment(CharacterAttachmentEnum attachmentEnum)
 	{
 		Node3D result = attachmentEnum switch
@@ -1623,6 +1681,34 @@ public sealed partial class PolytorianModel : CharacterModel
 						PT.PrintErr(ex);
 					}
 				}
+			}
+		}
+
+		if (avatarData.CustomAccessory.MeshId > 0)
+		{
+			try
+			{
+				Accessory acc = New<Accessory>();
+				acc.Name = "CustomAccessory";
+				acc.WeldToModelRoot = true;
+				acc.Parent = this;
+
+				Polytoria.Datamodel.Mesh accMesh = New<Polytoria.Datamodel.Mesh>();
+				accMesh.Name = "CustomAccessoryMesh";
+				PTMeshAsset accAsset = New<PTMeshAsset>();
+				accAsset.AssetID = (uint)avatarData.CustomAccessory.MeshId;
+				accMesh.Asset = accAsset;
+				accMesh.Parent = acc;
+				accMesh.Anchored = true;
+				accMesh.CanCollide = false;
+				accMesh.LocalPosition = new Vector3(avatarData.CustomAccessory.Px, avatarData.CustomAccessory.Py, avatarData.CustomAccessory.Pz);
+				accMesh.LocalRotation = new Vector3(avatarData.CustomAccessory.Rx, avatarData.CustomAccessory.Ry, avatarData.CustomAccessory.Rz);
+				if (avatarData.CustomAccessory.Sx > 0f)
+					accMesh.Size = new Vector3(avatarData.CustomAccessory.Sx, avatarData.CustomAccessory.Sy, avatarData.CustomAccessory.Sz);
+			}
+			catch (Exception ex)
+			{
+				PT.PrintErr(ex);
 			}
 		}
 

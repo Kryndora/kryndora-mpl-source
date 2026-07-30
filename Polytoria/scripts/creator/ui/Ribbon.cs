@@ -4,6 +4,7 @@
 
 using Godot;
 using Polytoria.Creator.Mcp;
+using Polytoria.Creator.Utils;
 using Polytoria.Datamodel;
 using Polytoria.Datamodel.Creator;
 using System;
@@ -17,6 +18,7 @@ public sealed partial class Ribbon : PanelContainer
 	private ButtonGroup _ribbonGroup = null!;
 
 	private Control _container = null!;
+	private Button? _accessoryButton;
 
 	public override void _Ready()
 	{
@@ -86,6 +88,17 @@ public sealed partial class Ribbon : PanelContainer
 			ShowMcpDialog();
 		};
 
+		_accessoryButton = new()
+		{
+			Name = "CreateAccessory",
+			Text = "Accessory",
+			CustomMinimumSize = new(64, 56),
+			TooltipText = "Create a custom accessory (position a mesh on your avatar).",
+			Visible = PolyCreatorAPI.UserID == 3
+		};
+		_container.AddChild(_accessoryButton);
+		_accessoryButton.Pressed += AccessoryCreateSession.ShowMeshIdDialog;
+
 		_ribbonGroup.Pressed += OnRibbonChanged;
 	}
 
@@ -123,6 +136,14 @@ public sealed partial class Ribbon : PanelContainer
 		};
 
 		CreatorService.Interface.PopupWindow(dialog);
+	}
+
+	public override void _Process(double delta)
+	{
+		if (_accessoryButton != null && !_accessoryButton.Visible && PolyCreatorAPI.UserID == 3)
+		{
+			_accessoryButton.Visible = true;
+		}
 	}
 
 	public override void _UnhandledKeyInput(InputEvent @event)
