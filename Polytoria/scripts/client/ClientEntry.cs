@@ -564,6 +564,7 @@ public sealed partial class ClientEntry : Node3D
 
 		if (Globals.IsInGDEditor)
 		{
+			args.AddRange(["--path", ProjectSettings.GlobalizePath("res://")]);
 			args.AddRange(["--remote-debug", "tcp://127.0.0.1:6007"]);
 		}
 

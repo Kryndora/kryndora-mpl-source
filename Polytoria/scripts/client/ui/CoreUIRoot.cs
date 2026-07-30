@@ -27,8 +27,8 @@ public partial class CoreUIRoot : CanvasLayer
 	[Export] public UIGameMenu GameMenu = null!;
 	[Export] public UIMenuButton MenuButton = null!;
 	[Export] public UIUserCard UserCard = null!;
-	[Export] public UIChat Chat = null!;
-	[Export] public UIChatButton ChatButton = null!;
+	[Export] public ChatWindowKryndora Chat = null!;
+	[Export] public ChatToggleKryndora ChatButton = null!;
 	[Export] public UIHealthbar HealthBar = null!;
 	[Export] public UILeaderboard Leaderboard = null!;
 	[Export] public UIInventory Inventory = null!;
