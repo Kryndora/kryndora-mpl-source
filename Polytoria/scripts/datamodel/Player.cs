@@ -25,7 +25,7 @@ public sealed partial class Player : NPC
 	private const double MaxAFKTime = 60 * 15;
 	private const float CameraHeight = 2f;
 	public const string CreatorHeadScene = "res://scenes/creator/livecollab/head.tscn";
-	public const string BubbleChatScene = "res://scenes/client/spatial/chat/bubble_chat.tscn";
+	public const string BubbleChatScene = "res://scenes/client/spatial/chat/chat_bubbles_kryndora.tscn";
 	private bool _isReady = false;
 	internal bool ClimbDebounce = false;
 	internal bool JustFinishedClimbing = false;
@@ -58,7 +58,7 @@ public sealed partial class Player : NPC
 
 	internal bool teleporting = false;
 
-	private BubbleChat _bubbleChat = null!;
+	private ChatBubbleHostKryndora _bubbleChat = null!;
 	private RemoteTransform3D _remoteCamAttach = null!;
 	internal Dynamic CamAttach = null!;
 	private Physical? _mouseHoveringOn;
@@ -391,7 +391,7 @@ public sealed partial class Player : NPC
 		Died.Connect(OnPlayerDied);
 		Root.Players.PropertyChanged.Connect(OnPlayersPropertyChanged);
 
-		_bubbleChat = Globals.CreateInstanceFromScene<BubbleChat>(BubbleChatScene);
+		_bubbleChat = Globals.CreateInstanceFromScene<ChatBubbleHostKryndora>(BubbleChatScene);
 		_bubbleChat.TargetPlayer = this;
 		_bubbleChat.Visible = _useBubbleChat;
 		GDNode.AddChild(_bubbleChat, @internal: Node.InternalMode.Back);
