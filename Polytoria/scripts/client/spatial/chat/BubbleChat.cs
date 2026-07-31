@@ -47,7 +47,7 @@ public partial class BubbleChat : Node3D
 		}
 
 		BubbleItem item = Globals.CreateInstanceFromScene<BubbleItem>(BubbleItemPath);
-		item.Content = ChatService.FormatEmojis(msg, 2);
+		item.Content = Polytoria.Client.UI.Chat.ChatLineKryndora.ApplyEmojis(msg, 2);
 		_itemContainer.AddChild(item);
 
 		_activeBubbles.Add(item);
