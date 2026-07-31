@@ -29,7 +29,7 @@ public partial class CoreUIRoot : CanvasLayer
 	[Export] public UIUserCard UserCard = null!;
 	[Export] public ChatWindowKryndora Chat = null!;
 	[Export] public ChatToggleKryndora ChatButton = null!;
-	[Export] public UIHealthbar HealthBar = null!;
+	[Export] public HealthBarKryndora HealthBar = null!;
 	[Export] public UILeaderboard Leaderboard = null!;
 	[Export] public UIInventory Inventory = null!;
 	[Export] public UIEmoteWheel EmoteWheel = null!;

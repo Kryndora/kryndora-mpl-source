@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://ds53x2p81v0ou" path="res://scripts/client/ui/CoreUIRoot.cs" id="1_aji3h"]
 [ext_resource type="Theme" uid="uid://2f3k1nh6p5ac" path="res://resources/themes/hud.tres" id="1_otsis"]
-[ext_resource type="Texture2D" uid="uid://th3l6kkfjdl2" path="res://assets/textures/client/ui/menu_button/chat.png" id="4_c3g11"]
-[ext_resource type="PackedScene" uid="uid://catf08041fifw" path="res://scenes/client/ui/health/health_bar.tscn" id="5_6062u"]
+[ext_resource type="Texture2D" path="res://assets/textures/client/ui/menu_button/chat-kryndora.png" id="4_c3g11"]
+[ext_resource type="PackedScene" path="res://scenes/client/ui/health/health_bar_kryndora.tscn" id="5_6062u"]
 [ext_resource type="Texture2D" uid="uid://dhbxwwpkupvvt" path="res://assets/textures/client/ui/mobile_controls/jump.png" id="5_aji3h"]
 [ext_resource type="Texture2D" uid="uid://c226wtcviyejd" path="res://assets/textures/client/ui/menu_button/backpack.png" id="5_msdsf"]
 [ext_resource type="Script" path="res://scripts/client/ui/chat/ChatToggleKryndora.cs" id="5_px6m7"]
@@ -414,10 +414,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -16.0
-offset_top = -24.0
-offset_right = 16.0
-offset_bottom = 24.0
+offset_left = -21.0
+offset_top = -21.0
+offset_right = 21.0
+offset_bottom = 21.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("4_c3g11")
