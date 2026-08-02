@@ -19,7 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://kd4fs42si2ah" path="res://scenes/client/ui/menu/game_menu.tscn" id="14_6062u"]
 [ext_resource type="Texture2D" uid="uid://doqoshw2g8hpk" path="res://assets/textures/client/ui/indicators/high_ping.svg" id="17_dsnfc"]
 [ext_resource type="Script" uid="uid://cgjl4npuupe5l" path="res://scripts/client/ui/indicators/UIIndicators.cs" id="17_gx3lw"]
-[ext_resource type="PackedScene" uid="uid://dxj38lpkxcdxy" path="res://scenes/client/ui/emotes/emote_wheel.tscn" id="17_mt8aq"]
+[ext_resource type="PackedScene" path="res://scenes/client/ui/emotes/emote_wheel_kryndora.tscn" id="17_mt8aq"]
 [ext_resource type="PackedScene" uid="uid://cv7lnp3aubm50" path="res://scenes/client/ui/misc/minimal_performance_overlay.tscn" id="17_yrpeo"]
 [ext_resource type="Texture2D" uid="uid://btl0tx78x3km6" path="res://assets/textures/client/ui/indicators/high_pressure.svg" id="18_gx3lw"]
 [ext_resource type="PackedScene" uid="uid://cb1gfgm5bto5s" path="res://scenes/client/ui/misc/nerd_stats.tscn" id="19_uj13p"]

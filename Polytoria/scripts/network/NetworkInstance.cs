@@ -53,6 +53,8 @@ public class NetworkInstance
 	public bool IsSilence { get; private set; } = false;
 	public bool IsServer { get; private set; } = false;
 	private bool _shutdownd = false;
+	private volatile bool _loopRunning = false;
+	private int _hostDestroyed = 0;
 
 	public NetworkInstance()
 	{
@@ -175,12 +177,38 @@ public class NetworkInstance
 	{
 		if (_shutdownd) return;
 		_shutdownd = true;
+
 		foreach ((_, ENetPacketPeer pk) in IdToPeer)
 		{
 			pk.PeerDisconnect();
 		}
-		_peer.Flush();
-		_peer.Destroy();
+
+		// Only the network thread may tear the host down. Destroying it here would free it
+		// while that thread is still inside Service()/Flush(), which crashes the process.
+		// If the loop is not running, nobody else will do it, so clean up right away.
+		if (!_loopRunning)
+		{
+			DestroyHost();
+		}
+	}
+
+	private void DestroyHost()
+	{
+		if (Interlocked.Exchange(ref _hostDestroyed, 1) == 1)
+			return;
+
+		try
+		{
+			if (GodotObject.IsInstanceValid(_peer))
+			{
+				_peer.Flush();
+				_peer.Destroy();
+			}
+		}
+		catch (Exception ex)
+		{
+			GD.PushError(ex);
+		}
 	}
 
 	public void BroadcastMessage(byte[] data, TransferMode transferMode, int transferChannel = 0, int[]? except = null)
@@ -198,26 +226,51 @@ public class NetworkInstance
 
 	private void NetworkLoop()
 	{
-		while (true)
+		_loopRunning = true;
+
+		try
 		{
-			if (_shutdownd) return;
-			if (!GodotObject.IsInstanceValid(_peer)) return;
-			try
+			while (true)
 			{
-				ProcessActionQueue();
-				ProcessNetwork();
-				CheckSilence();
-				_peer.Flush();
+				if (_shutdownd) return;
+				if (!GodotObject.IsInstanceValid(_peer)) return;
+				try
+				{
+					ProcessActionQueue();
+					ProcessNetwork();
+					CheckSilence();
+
+					// Shutdown can happen inside the calls above, which leaves the host closed
+					// while this iteration is still running.
+					if (_shutdownd || !GodotObject.IsInstanceValid(_peer))
+						return;
+
+					_peer.Flush();
+				}
+				catch (Exception ex)
+				{
+					GD.PushError(ex);
+				}
 			}
-			catch (Exception ex)
+		}
+		finally
+		{
+			_loopRunning = false;
+
+			if (_shutdownd)
 			{
-				GD.PushError(ex);
+				DestroyHost();
 			}
 		}
 	}
 
 	public double PopStatistic(ENetConnection.HostStatistic hs)
 	{
+		// Callers such as the stats overlay keep polling after a disconnect. Reading from a
+		// host that is already gone spams errors and can take the process down.
+		if (_shutdownd || !GodotObject.IsInstanceValid(_peer))
+			return 0;
+
 		return _peer.PopStatistic(hs);
 	}
 

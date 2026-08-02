@@ -32,7 +32,7 @@ public partial class CoreUIRoot : CanvasLayer
 	[Export] public HealthBarKryndora HealthBar = null!;
 	[Export] public UILeaderboard Leaderboard = null!;
 	[Export] public UIInventory Inventory = null!;
-	[Export] public UIEmoteWheel EmoteWheel = null!;
+	[Export] public EmoteWheelKryndora EmoteWheel = null!;
 	[Export] public UINotification NotificationCenter = null!;
 	[Export] public UICapturePreview CapturePreview = null!;
 	[Export] public UIPurchasePrompt PurchasePrompt = null!;
