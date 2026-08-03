@@ -35,7 +35,7 @@ public partial class ExplorerItemContextMenu : ContextMenu
 				AddIconItem("camera", "Go To", 5);
 				AddSeparator();
 			}
-			if (Target is Tool && PolyCreatorAPI.UserID == 3)
+			if (Target is Tool)
 			{
 				AddIconItem("edit", "Edit Grip", 60);
 				AddSeparator();
