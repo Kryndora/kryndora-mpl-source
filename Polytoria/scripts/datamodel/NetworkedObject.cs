@@ -1042,6 +1042,7 @@ public partial class NetworkedObject : IScriptObject
 	[ScriptMethod]
 	public bool IsA(string className)
 	{
+		className = Globals.ResolveRenamedClass(className);
 		Type? objType = GetType();
 
 		// Walk up the inheritance chain

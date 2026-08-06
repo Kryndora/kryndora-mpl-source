@@ -82,9 +82,9 @@ public sealed partial class InsertService : Instance
 	}
 
 	[ScriptMethod]
-	public PolytorianModel DefaultCharacter()
+	public KrynAvatar DefaultCharacter()
 	{
-		var ptm = New<PolytorianModel>();
+		var ptm = New<KrynAvatar>();
 		var animator = New<Animator>();
 		animator.AutoInit = false;
 		animator.Name = "Animator";
@@ -134,7 +134,7 @@ public sealed partial class InsertService : Instance
 
 		APIStoreItem storeItem = await GetStoreItemCachedAsync(id);
 
-		PTMeshAsset meshAsset = New<PTMeshAsset>();
+		KDMeshAsset meshAsset = New<KDMeshAsset>();
 		meshAsset.AssetID = (uint)id;
 
 		Accessory accessory = New<Accessory>(this);
@@ -160,16 +160,16 @@ public sealed partial class InsertService : Instance
 		if (accessoryType == "backAccessory" || accessoryType == "frontAccessory" || accessoryType == "waistAccessory")
 		{
 			mesh.LocalPosition = new Vector3(0, -6.8f, 0);
-			accessory.TargetAttachment = PolytorianModel.CharacterAttachmentEnum.LowerTorso;
+			accessory.TargetAttachment = KrynAvatar.CharacterAttachmentEnum.LowerTorso;
 		}
 		else if (accessoryType == "neckAccessory" || accessoryType == "shoulderAccessory")
 		{
 			mesh.LocalPosition = new Vector3(0, -8.8f, 0);
-			accessory.TargetAttachment = PolytorianModel.CharacterAttachmentEnum.UpperTorso;
+			accessory.TargetAttachment = KrynAvatar.CharacterAttachmentEnum.UpperTorso;
 		}
 		else
 		{
-			accessory.TargetAttachment = PolytorianModel.CharacterAttachmentEnum.Head;
+			accessory.TargetAttachment = KrynAvatar.CharacterAttachmentEnum.Head;
 		}
 
 		return accessory;
@@ -190,7 +190,7 @@ public sealed partial class InsertService : Instance
 		accessory.LocalRotation = Vector3.Zero;
 		mesh.LocalRotation = new Vector3(0, 180, 0);
 		accessory.Size = new Vector3(0.058f, 0.058f, 0.058f);
-		accessory.TargetAttachment = PolytorianModel.CharacterAttachmentEnum.Head;
+		accessory.TargetAttachment = KrynAvatar.CharacterAttachmentEnum.Head;
 
 		mesh.IncludeOffset = true;
 		mesh.Name = "Mesh";
@@ -207,10 +207,10 @@ public sealed partial class InsertService : Instance
 	{
 		APIStoreItem storeItem = await GetStoreItemCachedAsync(id);
 
-		PTMeshAsset meshAsset = New<PTMeshAsset>();
+		KDMeshAsset meshAsset = New<KDMeshAsset>();
 		meshAsset.AssetID = (uint)id;
 
-		PTImageAsset icon = New<PTImageAsset>();
+		KDImageAsset icon = New<KDImageAsset>();
 		icon.ImageID = (uint)id;
 		icon.ImageType = ImageTypeEnum.AssetThumbnail;
 

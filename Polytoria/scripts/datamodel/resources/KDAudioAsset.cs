@@ -8,17 +8,17 @@ using Polytoria.Shared.AssetLoaders;
 namespace Polytoria.Datamodel.Resources;
 
 [Instantiable]
-public partial class PTMeshAsset : MeshAsset
+public partial class KDAudioAsset : AudioAsset
 {
-	private uint _assetID;
+	private uint _audioID = 0;
 
-	[Editable, ScriptProperty, SyncVar]
-	public uint AssetID
+	[Editable, ScriptProperty]
+	public uint AudioID
 	{
-		get => _assetID;
+		get => _audioID;
 		set
 		{
-			_assetID = value;
+			_audioID = value;
 			LoadResource();
 			OnPropertyChanged();
 		}
@@ -26,13 +26,14 @@ public partial class PTMeshAsset : MeshAsset
 
 	public static void RegisterAsset()
 	{
-		RegisterType<PTMeshAsset>();
+		RegisterType<KDAudioAsset>();
 	}
 
 	public override void LoadResource()
 	{
+		if (AudioID == 0) return;
 		AssetLoader.Singleton.GetResource(
-			new() { Type = ResourceType.Mesh, ID = AssetID },
+			new() { Type = ResourceType.Audio, ID = AudioID },
 			InvokeResourceLoaded
 		);
 	}

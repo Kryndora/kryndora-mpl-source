@@ -14,7 +14,7 @@ public partial class ViewAvatarPage : MobileViewBase
 {
 	private const float FrontFacingDegrees = 180f;
 
-	private PolytorianModel? _polytorian;
+	private KrynAvatar? _polytorian;
 	private Node3D? _modelNode;
 	private bool _editorBuilt;
 	private float _modelYaw = FrontFacingDegrees;
@@ -29,7 +29,7 @@ public partial class ViewAvatarPage : MobileViewBase
 	{
 		SubViewportContainer container = GetNode<SubViewportContainer>("VBoxContainer/Control/AspectRatioContainer/SubViewportContainer");
 		SubViewport viewport = container.GetNode<SubViewport>("PlayerModel");
-		_polytorian = Globals.LoadInstance<PolytorianModel>();
+		_polytorian = Globals.LoadInstance<KrynAvatar>();
 		_modelNode = (Node3D)_polytorian.GDNode;
 		_modelNode.Position = new(0, -1.35f, 0);
 		_modelNode.RotationDegrees = new(0, _modelYaw, 0);

@@ -8,15 +8,15 @@ using Polytoria.Datamodel.Resources;
 
 namespace Polytoria.Creator.Properties;
 
-public sealed partial class PTImageAssetSubview : Control, IPropertySubview
+public sealed partial class KDImageAssetSubview : Control, IPropertySubview
 {
 	public NetworkedObject TargetObject { get; set; } = null!;
-	private PTImageAsset _baseAsset = null!;
+	private KDImageAsset _baseAsset = null!;
 	private TextureRect _rect = null!;
 
 	public override void _Ready()
 	{
-		_baseAsset = (PTImageAsset)TargetObject;
+		_baseAsset = (KDImageAsset)TargetObject;
 		_rect = GetNode<TextureRect>("Alpha/Texture");
 
 		if (_baseAsset.Resource != null)

@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 namespace Polytoria.Datamodel;
 
 [Instantiable]
-public sealed partial class PolytorianModel : CharacterModel
+public sealed partial class KrynAvatar : CharacterModel
 {
 	private const double NetLookBlendUpdateInterval = 0.1;
 	private double _lastNetUpdateTime = 0.0;
@@ -176,11 +176,11 @@ public sealed partial class PolytorianModel : CharacterModel
 	[Editable, ScriptProperty, NoSync, Attributes.Obsolete("Use FaceImage instead"), CloneIgnore]
 	public int FaceID
 	{
-		get => (int)((_faceImage is PTImageAsset polyImg) ? polyImg.ImageID : 0);
+		get => (int)((_faceImage is KDImageAsset polyImg) ? polyImg.ImageID : 0);
 		set
 		{
 			if (value == 0) { FaceImage = null; return; }
-			PTImageAsset imgAsset = new();
+			KDImageAsset imgAsset = new();
 			FaceImage = imgAsset;
 			imgAsset.ImageID = (uint)value;
 		}
@@ -351,7 +351,7 @@ public sealed partial class PolytorianModel : CharacterModel
 		{
 			_oldPhyParent = phy;
 
-			// Configure default collision shape for PolytorianModel
+			// Configure default collision shape for KrynAvatar
 			CollisionPivot = new()
 			{
 				Scale = NodeSize
@@ -1601,7 +1601,7 @@ public sealed partial class PolytorianModel : CharacterModel
 		{
 			if (asset.Type == "clothing")
 			{
-				PTImageAsset txt = New<PTImageAsset>();
+				KDImageAsset txt = New<KDImageAsset>();
 				txt.ImageID = (uint)asset.ID;
 				Clothing c = New<Clothing>();
 				c.Name = asset.Name;
@@ -1611,14 +1611,14 @@ public sealed partial class PolytorianModel : CharacterModel
 			else if (asset.Type == "face")
 			{
 				if (_faceOverrided) continue;
-				PTImageAsset face = New<PTImageAsset>();
+				KDImageAsset face = New<KDImageAsset>();
 				face.ImageID = (uint)asset.ID;
 				FaceImage = face;
 			}
 			else if (asset.Type == "body")
 			{
 				if (_bodyOverrided) continue;
-				var body = New<PTMeshAsset>();
+				var body = New<KDMeshAsset>();
 				body.AssetID = (uint)asset.ID;
 				BodyMesh = body;
 			}
@@ -1695,7 +1695,7 @@ public sealed partial class PolytorianModel : CharacterModel
 
 				Polytoria.Datamodel.Mesh accMesh = New<Polytoria.Datamodel.Mesh>();
 				accMesh.Name = "CustomAccessoryMesh";
-				PTMeshAsset accAsset = New<PTMeshAsset>();
+				KDMeshAsset accAsset = New<KDMeshAsset>();
 				accAsset.AssetID = (uint)avatarData.CustomAccessory.MeshId;
 				accMesh.Asset = accAsset;
 				accMesh.Parent = acc;

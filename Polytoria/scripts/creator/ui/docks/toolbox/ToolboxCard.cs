@@ -152,7 +152,7 @@ public partial class ToolboxCard : Button
 					Mesh mesh = root.New<Mesh>();
 					mesh.Name = nameToUse;
 					mesh.Parent = root.Environment;
-					PTMeshAsset asset = root.New<PTMeshAsset>();
+					KDMeshAsset asset = root.New<KDMeshAsset>();
 					asset.AssetID = ItemData.ID;
 					mesh.Asset = asset;
 					mesh.Position = root.CreatorContext.Freelook.GetPlacementPosition();
@@ -164,7 +164,7 @@ public partial class ToolboxCard : Button
 					Sound sound = root.New<Sound>();
 					sound.Name = nameToUse;
 					sound.Parent = root.Environment;
-					PTAudioAsset asset = root.New<PTAudioAsset>();
+					KDAudioAsset asset = root.New<KDAudioAsset>();
 					asset.AudioID = ItemData.ID;
 					sound.Audio = asset;
 					sound.Position = root.CreatorContext.Freelook.GetPlacementPosition();
@@ -176,7 +176,7 @@ public partial class ToolboxCard : Button
 					Image3D img = root.New<Image3D>();
 					img.Name = nameToUse;
 					img.Parent = root.Environment;
-					PTImageAsset asset = root.New<PTImageAsset>();
+					KDImageAsset asset = root.New<KDImageAsset>();
 					asset.ImageID = ItemData.ID;
 					img.Image = asset;
 					img.Position = root.CreatorContext.Freelook.GetPlacementPosition();

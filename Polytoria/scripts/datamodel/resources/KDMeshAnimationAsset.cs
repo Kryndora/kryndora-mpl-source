@@ -9,7 +9,7 @@ using Polytoria.Shared.AssetLoaders;
 namespace Polytoria.Datamodel.Resources;
 
 [Instantiable]
-public partial class PTMeshAnimationAsset : MeshAnimationAsset
+public partial class KDMeshAnimationAsset : MeshAnimationAsset
 {
 	private uint _assetID;
 
@@ -27,7 +27,7 @@ public partial class PTMeshAnimationAsset : MeshAnimationAsset
 
 	public static void RegisterAsset()
 	{
-		RegisterType<PTMeshAnimationAsset>();
+		RegisterType<KDMeshAnimationAsset>();
 	}
 
 	public override void LoadResource()

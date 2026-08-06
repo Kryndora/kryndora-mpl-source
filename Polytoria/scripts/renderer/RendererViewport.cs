@@ -76,11 +76,11 @@ public partial class RendererViewport : SubViewport
 		npc.Parent = Root.Environment;
 		npc.UseNametag = false;
 		npc.GDNode3D.RotationDegrees = new(0, 15, 0);
-		PolytorianModel ptm = (PolytorianModel)npc.Character!;
+		KrynAvatar ptm = (KrynAvatar)npc.Character!;
 
 		ptm.SetAnimationOverrideTo(true);
 		AnimationPlayer ply = ptm.AnimTree.GetNode<AnimationPlayer>(ptm.AnimTree.AnimPlayer);
-		PolytorianModel.AvatarLoadResponse loadRes = await ptm.InternalLoadAppearance(id, loadToolNpc: true);
+		KrynAvatar.AvatarLoadResponse loadRes = await ptm.InternalLoadAppearance(id, loadToolNpc: true);
 
 		if (loadRes.HasTool)
 		{

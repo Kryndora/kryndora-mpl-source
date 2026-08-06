@@ -12,7 +12,7 @@ namespace Polytoria.Datamodel;
 public partial class Clothing : Instance
 {
 	private ImageAsset? _asset;
-	private PolytorianModel? _target;
+	private KrynAvatar? _target;
 
 	internal Texture2D? ClothTexture;
 
@@ -63,7 +63,7 @@ public partial class Clothing : Instance
 	public override void EnterTree()
 	{
 		base.EnterTree();
-		if (Parent is PolytorianModel c)
+		if (Parent is KrynAvatar c)
 		{
 			_target = c;
 			NotifyCharacter();

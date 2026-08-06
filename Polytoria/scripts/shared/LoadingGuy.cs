@@ -9,7 +9,7 @@ namespace Polytoria.Shared;
 
 public partial class LoadingGuy : Control
 {
-	private PolytorianModel _pt = null!;
+	private KrynAvatar _pt = null!;
 
 	public override void _Ready()
 	{

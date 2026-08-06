@@ -261,8 +261,8 @@ public sealed partial class Mesh : Entity
 
 	private void CreatePTMeshAsset()
 	{
-		Asset = New<PTMeshAsset>();
-		if (Asset is PTMeshAsset mesh)
+		Asset = New<KDMeshAsset>();
+		if (Asset is KDMeshAsset mesh)
 		{
 			mesh.AssetID = (uint)_assetID;
 		}

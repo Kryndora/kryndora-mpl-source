@@ -11,13 +11,13 @@ namespace Polytoria.Datamodel;
 public partial class Accessory : Dynamic
 {
 	private CharacterModel? _targetCharacter;
-	private PolytorianModel.CharacterAttachmentEnum _targetAttachment;
+	private KrynAvatar.CharacterAttachmentEnum _targetAttachment;
 	private bool _weldToModelRoot;
 	private RemoteTransform3D? remoteTransform;
 	private Node? _currentAttachNode;
 
 	[Editable, ScriptProperty]
-	public PolytorianModel.CharacterAttachmentEnum TargetAttachment
+	public KrynAvatar.CharacterAttachmentEnum TargetAttachment
 	{
 		get => _targetAttachment;
 		set
@@ -45,7 +45,7 @@ public partial class Accessory : Dynamic
 		if (_targetCharacter == null || !GDNode.IsInsideTree()) { return; }
 		remoteTransform?.QueueFree();
 
-		if (_weldToModelRoot && _targetCharacter is PolytorianModel ptm)
+		if (_weldToModelRoot && _targetCharacter is KrynAvatar ptm)
 		{
 			// Anchor stays in the model-root frame (stable everywhere) but the remote
 			// transform is parented under the body-follow node so it inherits the jump.
@@ -82,7 +82,7 @@ public partial class Accessory : Dynamic
 	public override void Process(double delta)
 	{
 		base.Process(delta);
-		if (_weldToModelRoot && _targetCharacter is PolytorianModel ptm)
+		if (_weldToModelRoot && _targetCharacter is KrynAvatar ptm)
 		{
 			Node desired = ptm.GetBodyFollowNode();
 			if (desired != _currentAttachNode)

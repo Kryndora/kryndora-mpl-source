@@ -212,7 +212,7 @@ public sealed partial class Image3D : Dynamic
 			return;
 		}
 
-		PTImageAsset polyImg = New<PTImageAsset>();
+		KDImageAsset polyImg = New<KDImageAsset>();
 		Image = polyImg;
 		polyImg.ImageType = _imageType;
 		polyImg.ImageID = result;

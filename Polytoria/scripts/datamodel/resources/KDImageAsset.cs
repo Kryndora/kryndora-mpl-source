@@ -9,7 +9,7 @@ using System;
 namespace Polytoria.Datamodel.Resources;
 
 [Instantiable]
-public partial class PTImageAsset : ImageAsset
+public partial class KDImageAsset : ImageAsset
 {
 	private uint _imageID;
 	private ImageTypeEnum _imageType;
@@ -42,7 +42,7 @@ public partial class PTImageAsset : ImageAsset
 
 	public static void RegisterAsset()
 	{
-		RegisterType<PTImageAsset>();
+		RegisterType<KDImageAsset>();
 	}
 
 	public override void LoadResource()

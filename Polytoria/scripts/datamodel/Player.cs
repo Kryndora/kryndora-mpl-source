@@ -490,7 +490,7 @@ public sealed partial class Player : NPC
 		if (Anchored)
 		{
 			// just in case it's anchored cuz ragdoll
-			if (Character is PolytorianModel pt && pt.Ragdolling == false)
+			if (Character is KrynAvatar pt && pt.Ragdolling == false)
 			{
 				UpdateCamera(delta);
 			}
@@ -602,7 +602,7 @@ public sealed partial class Player : NPC
 	{
 		if (Root.SessionType != World.SessionTypeEnum.Client || !IsLocal || !IsReady) { return; }
 
-		if (Character is PolytorianModel pt && pt.Ragdolling)
+		if (Character is KrynAvatar pt && pt.Ragdolling)
 		{
 			// ragdoll camera update
 			UpdateCamera(delta);
@@ -762,7 +762,7 @@ public sealed partial class Player : NPC
 		// Disable auto update, this will be updated manually
 		AutoUpdateNetTransform = false;
 
-		if (Character is PolytorianModel ptc)
+		if (Character is KrynAvatar ptc)
 		{
 			ptc.RagdollStarted.Connect(OnRagdollStarted);
 			ptc.RagdollStopped.Connect(OnRagdollStopped);
@@ -950,7 +950,7 @@ public sealed partial class Player : NPC
 		AutoLoadAppearance = Root.PlayerDefaults.AutoLoadAppearance;
 		MovementMode = Root.PlayerDefaults.MovementMode;
 
-		if (Character is PolytorianModel ptmodel)
+		if (Character is KrynAvatar ptmodel)
 		{
 			ptmodel.StopRagdoll();
 		}

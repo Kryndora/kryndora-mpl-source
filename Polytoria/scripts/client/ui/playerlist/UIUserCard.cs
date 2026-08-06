@@ -20,7 +20,7 @@ public partial class UIUserCard : Control
 	[Export] private Label _usernameLabel = null!;
 	[Export] private Control _statsContainer = null!;
 	[Export] private TextureRect _pfpIconRect = null!;
-	private readonly PTImageAsset _plrIconAsset = new();
+	private readonly KDImageAsset _plrIconAsset = new();
 	private static World Root => CoreUIRoot.Singleton.Root;
 	internal static Player TargetPlayer => Root.Players.LocalPlayer;
 

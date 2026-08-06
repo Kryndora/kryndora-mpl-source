@@ -17,7 +17,7 @@ public partial class PlaceCard : Button
 
 	public APIWorldsData PlaceData;
 
-	private readonly PTImageAsset _iconAsset = new();
+	private readonly KDImageAsset _iconAsset = new();
 
 
 	public override void _Ready()

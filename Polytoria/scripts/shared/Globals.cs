@@ -155,15 +155,15 @@ public sealed partial class Globals : Node
 
 		// Register asset types
 		// TODO: Maybe this could be automated via source generation?
-		PTImageAsset.RegisterAsset();
-		PTAudioAsset.RegisterAsset();
-		PTMeshAsset.RegisterAsset();
+		KDImageAsset.RegisterAsset();
+		KDAudioAsset.RegisterAsset();
+		KDMeshAsset.RegisterAsset();
 		LocalMeshAsset.RegisterAsset();
 		BuiltInAudioAsset.RegisterAsset();
 		BuiltInFontAsset.RegisterAsset();
 		FileLinkAsset.RegisterAsset();
 		GradientImageAsset.RegisterAsset();
-		PTMeshAnimationAsset.RegisterAsset();
+		KDMeshAnimationAsset.RegisterAsset();
 	}
 
 	public override void _EnterTree()
@@ -251,11 +251,28 @@ public sealed partial class Globals : Node
 		return (T?)LoadNetworkedObject(className, root);
 	}
 
+	private static readonly Dictionary<string, string> RenamedClasses = new()
+	{
+		{ "PTImageAsset", "KDImageAsset" },
+		{ "PTAudioAsset", "KDAudioAsset" },
+		{ "PTMeshAsset", "KDMeshAsset" },
+		{ "PTMeshAnimationAsset", "KDMeshAnimationAsset" },
+		{ "PolytorianModel", "KrynAvatar" },
+	};
+
+	public static string ResolveRenamedClass(string className)
+	{
+		return RenamedClasses.TryGetValue(className, out string? renamed) ? renamed : className;
+	}
+
 	[return: DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
 	private static Type? GetTypeByName(string className)
 	{
 		if (_typesCache.TryGetValue(className, out Type? t))
 			return t;
+
+		string requested = className;
+		className = ResolveRenamedClass(className);
 
 		string[] namespacesToCheck =
 		[
@@ -270,7 +287,7 @@ public sealed partial class Globals : Node
 			t = Type.GetType(ns + className);
 			if (t != null)
 			{
-				_typesCache.AddOrUpdate(className, t);
+				_typesCache.AddOrUpdate(requested, t);
 				return t;
 			}
 		}
