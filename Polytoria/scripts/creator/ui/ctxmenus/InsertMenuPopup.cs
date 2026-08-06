@@ -12,6 +12,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Script = Polytoria.Datamodel.Script;
+using Polytoria.Creator.Utils;
+
 
 namespace Polytoria.Creator.UI;
 
@@ -251,6 +253,9 @@ public partial class InsertMenuPopup : PopupPanel
 
 			foreach (string className in filtered)
 			{
+				if (className == "NPC" && PolyCreatorAPI.UserID != 3) continue;
+				if (className == "Clothing" && PolyCreatorAPI.UserID != 3) continue;
+				if (className == "Accessory" && PolyCreatorAPI.UserID != 3) continue;
 				string myClass = className;
 
 				InsertPopupItem item = _itemPacked.Instantiate<InsertPopupItem>();
