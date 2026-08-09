@@ -7,6 +7,7 @@ using Polytoria.Attributes;
 using Polytoria.Datamodel;
 using Polytoria.Datamodel.Creator;
 using Polytoria.Shared;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -91,7 +92,7 @@ public sealed partial class Explorer : TabContainer
 			item.Collapsed = true;
 
 			// Renameable
-			if (!instance.GetType().IsDefined(typeof(StaticAttribute)) && instance is not Datamodel.Script)
+			if (!instance.GetType().IsDefined(typeof(StaticAttribute)))
 			{
 				item.SetEditable(0, true);
 			}
@@ -454,6 +455,27 @@ public sealed partial class Explorer : TabContainer
 		}
 	}
 
+	private static void RenameLinkedScriptFile(Instance instance)
+	{
+		if (instance is not Datamodel.Script script) return;
+		if (CreatorService.CurrentSession is not CreatorSession session) return;
+
+		string? currentPath = script.LinkedScript?.LinkedPath;
+		if (string.IsNullOrWhiteSpace(currentPath)) return;
+
+		string wanted = script.CreateLuaFileName();
+		if (currentPath.GetFile().Equals(wanted, StringComparison.Ordinal)) return;
+
+		try
+		{
+			session.RenameFile(currentPath, wanted);
+		}
+		catch (System.Exception ex)
+		{
+			PT.PrintErr("Could not rename the script file: ", ex);
+		}
+	}
+
 	private void OnItemEdited()
 	{
 		ExplorerTree currentTree = GetCurrentTree()!;
@@ -466,6 +488,7 @@ public sealed partial class Explorer : TabContainer
 		try
 		{
 			currentTree.Root.CreatorContext.History.RenameInstance(instance, newName);
+			RenameLinkedScriptFile(instance);
 		}
 		catch (System.Exception ex)
 		{

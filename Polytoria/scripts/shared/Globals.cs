@@ -258,6 +258,7 @@ public sealed partial class Globals : Node
 		{ "PTMeshAsset", "KDMeshAsset" },
 		{ "PTMeshAnimationAsset", "KDMeshAnimationAsset" },
 		{ "PolytorianModel", "KrynAvatar" },
+		{ "ProximityPrompt", "InteractPrompt" },
 	};
 
 	public static string ResolveRenamedClass(string className)

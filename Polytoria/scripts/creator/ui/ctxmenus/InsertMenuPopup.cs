@@ -137,7 +137,7 @@ public partial class InsertMenuPopup : PopupPanel
 		},
 		[new() { Title = "Interaction" }] = new()
 		{
-			"ProximityPrompt",
+			"InteractPrompt",
 			"ClickTrigger",
 		},
 		[new() { Title = "Gizmos" }] = new()

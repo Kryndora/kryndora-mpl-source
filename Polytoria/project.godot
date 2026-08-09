@@ -68,7 +68,7 @@ window/vsync/vsync_mode=0
 
 [dotnet]
 
-project/assembly_name="Polytoria"
+project/assembly_name="Kryndora"
 project/solution_directory="../"
 
 [editor_plugins]

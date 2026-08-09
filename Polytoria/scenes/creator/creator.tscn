@@ -65,10 +65,10 @@ bg_color = Color(0.078431375, 0.078431375, 0.078431375, 1)
 resource_name = "MenuTheme"
 MenuButton/colors/font_color = Color(0.376471, 0.376471, 0.376471, 1)
 MenuButton/colors/font_disabled_color = Color(0.211765, 0.211765, 0.211765, 1)
-MenuButton/colors/font_focus_color = Color(0.8, 0.8, 0.8, 1)
-MenuButton/colors/font_hover_color = Color(0.8, 0.8, 0.8, 1)
-MenuButton/colors/font_hover_pressed_color = Color(0.8, 0.8, 0.8, 1)
-MenuButton/colors/font_pressed_color = Color(0.8, 0.8, 0.8, 1)
+MenuButton/colors/font_focus_color = Color(0.956863, 0.956863, 0.960784, 1)
+MenuButton/colors/font_hover_color = Color(0.956863, 0.956863, 0.960784, 1)
+MenuButton/colors/font_hover_pressed_color = Color(0.956863, 0.956863, 0.960784, 1)
+MenuButton/colors/font_pressed_color = Color(0.956863, 0.956863, 0.960784, 1)
 MenuButton/font_sizes/font_size = 14
 MenuButton/fonts/font = SubResource("FontVariation_khfyn")
 MenuButton/styles/disabled = SubResource("StyleBoxEmpty_yfi7h")
@@ -162,7 +162,7 @@ border_color = Color(0.16078432, 0.16078432, 0.16078432, 1)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_it5bq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p3aol"]
-bg_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+bg_color = Color(0.078431, 0.078431, 0.078431, 1)
 corner_radius_top_left = 1
 corner_radius_top_right = 1
 corner_radius_bottom_right = 1
@@ -231,7 +231,7 @@ ItemList/styles/selected_focus = SubResource("StyleBoxFlat_blgnk")
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u51la"]
 bg_color = Color(0.14902, 0.14902, 0.14902, 1)
 border_width_left = 2
-border_color = Color(0.08627451, 0.08627451, 0.08627451, 1)
+border_color = Color(0.078431, 0.078431, 0.078431, 1)
 
 [sub_resource type="Theme" id="Theme_4pher"]
 resource_name = "SideTheme"
@@ -300,8 +300,8 @@ TabContainer/styles/tab_unselected = SubResource("StyleBoxFlat_i1txp")
 TabContainer/styles/tabbar_background = SubResource("StyleBoxEmpty_xdd36")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ubkni"]
-bg_color = Color(0.08627451, 0.08627451, 0.08627451, 1)
-border_color = Color(0.08627451, 0.08627451, 0.08627451, 1)
+bg_color = Color(0.078431, 0.078431, 0.078431, 1)
+border_color = Color(0.078431, 0.078431, 0.078431, 1)
 expand_margin_bottom = 3.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8cbqn"]
@@ -321,7 +321,7 @@ content_margin_left = 5.0
 content_margin_top = 3.0
 content_margin_right = 5.0
 content_margin_bottom = 3.0
-bg_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+bg_color = Color(0.078431, 0.078431, 0.078431, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -344,7 +344,7 @@ border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.129412, 0.588235, 0.952941, 1)
+border_color = Color(0.341176, 0.341176, 0.341176, 1)
 corner_radius_top_left = 256
 corner_radius_top_right = 256
 corner_radius_bottom_right = 256
@@ -361,7 +361,7 @@ border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.129412, 0.588235, 0.952941, 1)
+border_color = Color(0.341176, 0.341176, 0.341176, 1)
 corner_radius_top_left = 6
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6

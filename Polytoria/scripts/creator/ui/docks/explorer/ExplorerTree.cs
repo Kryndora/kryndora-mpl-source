@@ -53,6 +53,17 @@ public partial class ExplorerTree : Tree
 	{
 		if (@event is InputEventMouseButton mouseEvent)
 		{
+			if (mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.Pressed && !mouseEvent.DoubleClick)
+			{
+				TreeItem hit = GetItemAtPosition(mouseEvent.Position);
+				if (hit != null && hit == GetSelected() && hit.IsEditable(0)
+					&& GetColumnAtPosition(mouseEvent.Position) == 0)
+				{
+					CallDeferred(Tree.MethodName.EditSelected);
+					return;
+				}
+			}
+
 			if (mouseEvent.ButtonIndex == MouseButton.Right && mouseEvent.Pressed)
 			{
 				TreeItem clickedItem = GetItemAtPosition(mouseEvent.Position);

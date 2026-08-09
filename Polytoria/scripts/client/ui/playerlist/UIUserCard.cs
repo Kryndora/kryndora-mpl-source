@@ -46,6 +46,15 @@ public partial class UIUserCard : Control
 				AddStat(stat);
 			}
 		}
+
+		TextureRect badge = new ();
+		badge.Texture = GD.Load<Texture2D>("res://assets/textures/ui-icons/verify.png");
+		badge.Visible = TargetPlayer.IsVerified;
+		badge.ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize;
+badge.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
+badge.CustomMinimumSize = new Vector2(18, 18);
+_usernameLabel.AddSibling(badge);
+
 	}
 
 	public override void _ExitTree()

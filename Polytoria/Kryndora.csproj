@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Godot.NET.Sdk/4.6.2">
 	<PropertyGroup>
+		<AssemblyName>Kryndora</AssemblyName>
 		<TargetFramework>net10.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<PublishAot>true</PublishAot>

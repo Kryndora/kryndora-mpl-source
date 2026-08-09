@@ -40,6 +40,8 @@ public partial class ExplorerItemContextMenu : ContextMenu
 				AddIconItem("edit", "Edit Grip", 60);
 				AddSeparator();
 			}
+			AddIconItem("edit", "Rename", 62);
+			AddSeparator();
 			if (Target.LinkedModel != null)
 			{
 				if (Target.EditableChildren)
@@ -103,6 +105,11 @@ public partial class ExplorerItemContextMenu : ContextMenu
 			case 60: // Edit Grip
 				{
 					if (Target is Tool gripTool) GripEditSession.Start(gripTool);
+					break;
+				}
+			case 62: // Rename
+				{
+					Explorer.GetCurrentTree()?.CallDeferred(Tree.MethodName.EditSelected);
 					break;
 				}
 			case 1: // Add child

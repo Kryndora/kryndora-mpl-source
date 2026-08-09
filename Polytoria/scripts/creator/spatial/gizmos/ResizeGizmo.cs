@@ -85,8 +85,8 @@ public partial class ResizeGizmo : Node, IGizmo
 			_resizeGizmo[i] = new()
 			{
 				Material = material,
-				Radius = 0.1f,
-				Height = 0.2f
+				Radius = 0.19f,
+				Height = 0.38f
 			};
 		}
 	}

@@ -30,7 +30,7 @@ public partial class CreatorInterface : Control, IScriptObject
 {
 	public const string IntroRanFile = "user://creator/introran";
 
-	private const string CreateScriptPopupPath = "res://scenes/creator/popups/create_script.tscn";
+	private const string CreateScriptPopupPath = "res://scenes/creator/popups/create_script_kryndora.tscn";
 	private const string GiveNamePopupPath = "res://scenes/creator/popups/give_name.tscn";
 	private const string LinkDevicePopupPath = "res://scenes/creator/popups/link_device.tscn";
 	private const string SettingsPopupPath = "res://scenes/creator/popups/settings/settings.tscn";
@@ -379,7 +379,7 @@ public partial class CreatorInterface : Control, IScriptObject
 
 	public void PromptCreateScript(Instance? atInstance = null, string? atPath = null)
 	{
-		CreateScriptPopup popup = Globals.CreateInstanceFromScene<CreateScriptPopup>(CreateScriptPopupPath);
+		CreateScriptPopupKryndora popup = Globals.CreateInstanceFromScene<CreateScriptPopupKryndora>(CreateScriptPopupPath);
 		PendingCreateScriptAt = atInstance;
 		popup.CreateAt = atPath;
 		PopupWindow(popup);
