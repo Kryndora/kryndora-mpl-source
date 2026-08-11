@@ -109,7 +109,11 @@ public partial class ExplorerItemContextMenu : ContextMenu
 				}
 			case 62: // Rename
 				{
-					Explorer.GetCurrentTree()?.CallDeferred(Tree.MethodName.EditSelected);
+					ExplorerTree? renameTree = Explorer.GetCurrentTree();
+					if (renameTree != null)
+					{
+						Callable.From(renameTree.BeginRenameSelected).CallDeferred();
+					}
 					break;
 				}
 			case 1: // Add child

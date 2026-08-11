@@ -1,7 +1,7 @@
 # Kryndora — MPL-2.0 Source
 
 This repository contains the **Mozilla Public License 2.0 (MPL-2.0)** covered source
-files used by **Kryndora**, a game/creator platform based on
+files used by **Kryndora**, a game and creator platform based on
 [Polytoria](https://github.com/Polytoria/polytoria-game).
 
 It is published to fulfill the MPL-2.0 source-availability obligation for the
@@ -14,14 +14,16 @@ Polytoria-derived files that Kryndora modifies and distributes.
 
 ## What's NOT in here
 
-The following are **original Kryndora work** and are **not** MPL-covered, so they are
-intentionally not included:
+Everything that is **original Kryndora work** is not MPL-covered and is therefore
+intentionally excluded, in particular:
 
-- Kryndora's own original game files (e.g. BanService, ProximityPrompt, ClickTrigger,
-  PromptProgressArc, the developer console, admin tooling, the local mesh importer, and the
-  Studio MCP bridge).
+- Kryndora's own game and editor code, including the parts that replace former
+  Polytoria components.
 - The Kryndora website, account system, launcher, installer (KryndoraPlayer), and platform server.
-- Kryndora branding, logos, custom faces, clothing, and other original assets.
+- Kryndora branding, logos, icons, avatars, faces, clothing, sounds, and other original assets.
+
+Over time an increasing share of Kryndora is written from scratch, so files that used to
+appear here may be removed as they are replaced by original work.
 
 Because the Kryndora-only files are excluded, this repository does **not** build as a
 standalone game. That is expected: MPL-2.0 only requires the source of the covered files

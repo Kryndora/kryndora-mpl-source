@@ -92,6 +92,11 @@ public partial class AppEntry : Node
 			entry = AppEntryEnum.Renderer;
 		}
 
+		if (cmdargs.ContainsKey("mobile"))
+		{
+			entry = AppEntryEnum.MobileUI;
+		}
+
 		Callable.From(() =>
 		{
 			Node app = Globals.Singleton.SwitchEntry(entry);

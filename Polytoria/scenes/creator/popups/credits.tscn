@@ -86,7 +86,7 @@ theme_override_constants/separation = 0
 
 [node name="Label2" type="Label" parent="MarginContainer/Control2/HBoxContainer/VBoxContainer/VBoxContainer/VBoxContainer" unique_id=946923703]
 layout_mode = 2
-text = "Louis"
+text = "Funkj"
 horizontal_alignment = 1
 
 [node name="Label3" type="Label" parent="MarginContainer/Control2/HBoxContainer/VBoxContainer/VBoxContainer/VBoxContainer" unique_id=722425681]
@@ -113,7 +113,7 @@ theme_override_constants/separation = 0
 
 [node name="Label2" type="Label" parent="MarginContainer/Control2/HBoxContainer/VBoxContainer/VBoxContainer4/VBoxContainer" unique_id=1716799543]
 layout_mode = 2
-text = "Louis"
+text = "Steve"
 horizontal_alignment = 1
 
 [node name="HSeparator4" type="HSeparator" parent="MarginContainer/Control2/HBoxContainer/VBoxContainer" unique_id=1923886537]

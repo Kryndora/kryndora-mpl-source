@@ -90,12 +90,6 @@ public sealed partial class Explorer : TabContainer
 			TreeItem parentItem = _instanceToItem[instance.Parent];
 			item = parentItem.CreateChild();
 			item.Collapsed = true;
-
-			// Renameable
-			if (!instance.GetType().IsDefined(typeof(StaticAttribute)))
-			{
-				item.SetEditable(0, true);
-			}
 		}
 
 		item.SetIcon(0, Globals.LoadIcon(instance.ClassName));

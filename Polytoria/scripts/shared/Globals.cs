@@ -28,9 +28,6 @@ public sealed partial class Globals : Node
 	public const string CreatorDisplayName = "Kryndora Studio";
 	private static readonly string LocalPlatformEndpoint = ResolvePlatformEndpoint();
 
-	// The game talks to the platform API over plain HTTP (Godot's HTTP client has no TLS CA bundle
-	// in dedicated server / exported builds). Browsers still use HTTPS via the kryndora.lol website.
-	// An optional "kryndora_endpoint.txt" next to the executable overrides this without re-exporting.
 	private static string ResolvePlatformEndpoint()
 	{
 		try
@@ -45,7 +42,7 @@ public sealed partial class Globals : Node
 			}
 		}
 		catch { }
-		return "http://kryndora.lol:4000/";
+		return "https://kryndora.lol/";
 	}
 	public static readonly string MainEndpoint = LocalPlatformEndpoint;
 	public static readonly string ApiEndpoint = LocalPlatformEndpoint + "api/";
@@ -698,7 +695,7 @@ public sealed partial class Globals : Node
 		{
 			AppEntryEnum.Client => "res://scenes/client/client.tscn",
 			AppEntryEnum.Creator => "res://scenes/creator/creator.tscn",
-			AppEntryEnum.MobileUI => "res://scenes/mobile/mobile.tscn",
+			AppEntryEnum.MobileUI => "res://scenes/KryndoraMobile/app.tscn",
 			AppEntryEnum.Renderer => "res://scenes/renderer/renderer.tscn",
 			_ => "res://scenes/client/client.tscn",
 		};

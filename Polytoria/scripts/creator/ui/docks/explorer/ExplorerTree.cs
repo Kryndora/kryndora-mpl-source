@@ -3,12 +3,14 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using Godot;
+using Polytoria.Attributes;
 using Polytoria.Datamodel;
 using Polytoria.Datamodel.Creator;
 using Polytoria.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Script = Polytoria.Datamodel.Script;
 
 namespace Polytoria.Creator.UI;
@@ -21,9 +23,14 @@ public partial class ExplorerTree : Tree
 	public readonly Dictionary<TreeItem, Instance> ItemToInstance = [];
 	public TreeItem? ScrollToTarget = null!;
 
+	private const double RenameClickDelay = 0.4;
+	private uint _renameRequest;
+	private TreeItem? _renameItem;
+
 	public override void _Ready()
 	{
 		ItemActivated += OnItemActivated;
+		ItemEdited += EndRename;
 		base._Ready();
 	}
 
@@ -53,14 +60,19 @@ public partial class ExplorerTree : Tree
 	{
 		if (@event is InputEventMouseButton mouseEvent)
 		{
-			if (mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.Pressed && !mouseEvent.DoubleClick)
+			if (mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.Pressed)
+			{
+				CancelPendingRename();
+				EndRename();
+			}
+
+			if (mouseEvent.ButtonIndex == MouseButton.Left && !mouseEvent.Pressed && !mouseEvent.DoubleClick)
 			{
 				TreeItem hit = GetItemAtPosition(mouseEvent.Position);
-				if (hit != null && hit == GetSelected() && hit.IsEditable(0)
+				if (hit != null && hit == GetSelected() && CanRename(hit)
 					&& GetColumnAtPosition(mouseEvent.Position) == 0)
 				{
-					CallDeferred(Tree.MethodName.EditSelected);
-					return;
+					StartRenameAfterDelay(hit);
 				}
 			}
 
@@ -91,13 +103,71 @@ public partial class ExplorerTree : Tree
 		}
 		else if (@event.IsActionPressed("rename"))
 		{
-			EditSelected();
+			BeginRenameSelected();
 		}
 		base._GuiInput(@event);
 	}
 
+	private bool CanRename(TreeItem item)
+	{
+		return ItemToInstance.TryGetValue(item, out Instance? instance)
+			&& instance != null
+			&& !instance.GetType().IsDefined(typeof(StaticAttribute));
+	}
+
+	private void CancelPendingRename()
+	{
+		_renameRequest++;
+	}
+
+	private void EndRename()
+	{
+		if (_renameItem != null)
+		{
+			if (GodotObject.IsInstanceValid(_renameItem))
+			{
+				_renameItem.SetEditable(0, false);
+			}
+			_renameItem = null;
+		}
+	}
+
+	public void BeginRenameSelected()
+	{
+		TreeItem selected = GetSelected();
+		if (selected == null || !CanRename(selected))
+		{
+			return;
+		}
+
+		CancelPendingRename();
+		EndRename();
+
+		_renameItem = selected;
+		selected.SetEditable(0, true);
+		EditSelected();
+	}
+
+	private async void StartRenameAfterDelay(TreeItem target)
+	{
+		uint request = ++_renameRequest;
+		await ToSignal(GetTree().CreateTimer(RenameClickDelay), SceneTreeTimer.SignalName.Timeout);
+
+		if (request != _renameRequest || !GodotObject.IsInstanceValid(this))
+		{
+			return;
+		}
+
+		if (GodotObject.IsInstanceValid(target) && target == GetSelected())
+		{
+			BeginRenameSelected();
+		}
+	}
+
 	private void OnItemActivated()
 	{
+		CancelPendingRename();
+
 		TreeItem target = GetSelected();
 
 		if (target == null)
@@ -115,6 +185,9 @@ public partial class ExplorerTree : Tree
 
 	public override Variant _GetDragData(Vector2 atPosition)
 	{
+		CancelPendingRename();
+		EndRename();
+
 		return new InstanceDragData()
 		{
 			Instances = [.. ItemToInstance
