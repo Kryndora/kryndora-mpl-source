@@ -501,9 +501,9 @@ return module";
 		atPath = atPath.SanitizePath();
 		string globalized = GlobalizePath(atPath);
 
-		if (!atPath.EndsWith(".poly"))
+		if (!Globals.IsWorldFile(atPath))
 		{
-			throw new InvalidOperationException("World file must end with .poly extension");
+			throw new InvalidOperationException($"World file must end with {Globals.WorldFileExtension} extension");
 		}
 
 		if (File.Exists(globalized))
@@ -533,7 +533,7 @@ return module";
 
 	public void RemoveFile(string src, bool toRecycleBin = false)
 	{
-		if (src == Globals.ProjectMetaFileName) throw new InvalidOperationException("Cannot delete the project metadata file");
+		if (Globals.IsProjectMetaFile(src)) throw new InvalidOperationException("Cannot delete the project metadata file");
 		if (src == Globals.ProjectInputMapName) throw new InvalidOperationException("Cannot delete the input map");
 		if (World.Current != null && World.Current.WorldFilePath == src) throw new InvalidOperationException("Cannot delete currently opened world");
 		if (src == "") throw new InvalidOperationException("Cannot delete the root folder");
@@ -574,7 +574,7 @@ return module";
 
 	public void RenameFile(string src, string renameTo)
 	{
-		if (src == Globals.ProjectMetaFileName) return;
+		if (Globals.IsProjectMetaFile(src)) return;
 		if (!FileExists(src)) return;
 		string srcRelative = src.SanitizePath();
 		src = GlobalizePath(src);

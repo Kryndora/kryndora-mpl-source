@@ -45,7 +45,7 @@ public static class ProjectManager
 
 				if (loadData)
 				{
-					string projectMetaFile = Path.GetFullPath(Path.Join(r.FolderPath, Globals.ProjectMetaFileName));
+					string projectMetaFile = Path.GetFullPath(Globals.ResolveProjectMetaPath(r.FolderPath));
 					if (!File.Exists(projectMetaFile)) continue;
 
 					tasks.Add(Task.Run<RecentData?>(() =>
@@ -120,8 +120,8 @@ public static class ProjectManager
 		string clientPath = Path.GetFullPath(Path.Join(scriptsPath, "client"));
 		string modulePath = Path.GetFullPath(Path.Join(scriptsPath, "modules"));
 
-		CreatorService.Interface.LoadOverlay?.SetTitle("Creating new project");
-		CreatorService.Interface.LoadOverlay?.SetStatus("Creating...");
+		CreatorService.Interface.LoadOverlay?.SetTitle("Setting up your game");
+		CreatorService.Interface.LoadOverlay?.SetStatus("Putting the files in place...");
 		CreatorService.Interface.LoadOverlay?.Show();
 
 		File.WriteAllText(projectMetaPath, JsonSerializer.Serialize(metadata, ProjectJSONGenerationContext.Default.CreatorProjectMetadata));
@@ -148,7 +148,7 @@ public static class ProjectManager
 			Directory.CreateDirectory(modulePath);
 		}
 
-		CreatorService.Interface.LoadOverlay?.SetStatus("Opening Project...");
+		CreatorService.Interface.LoadOverlay?.SetStatus("Almost ready...");
 		await CreatorService.Singleton.CreateNewSession(projectMetaPath);
 		CreatorService.Interface.LoadOverlay?.Hide();
 	}
@@ -162,7 +162,12 @@ public static class ProjectManager
 		using DirAccess dir = DirAccess.Open(templateFolderPath) ?? throw new DirectoryNotFoundException($"Template folder not found: {templateFolderPath}");
 
 		CopyResourceDirRecursive(templateFolderPath, destFolder);
-		await NewProject(destFolder, new() { MainWorld = "main.poly", ProjectName = metadata.ProjectName }, true);
+		string templateWorld = Path.Join(destFolder, "main" + Globals.LegacyWorldFileExtension);
+		string renamedWorld = Path.Join(destFolder, Globals.DefaultWorldFileName);
+		if (File.Exists(templateWorld) && !File.Exists(renamedWorld))
+			File.Move(templateWorld, renamedWorld);
+
+		await NewProject(destFolder, new() { MainWorld = Globals.DefaultWorldFileName, ProjectName = metadata.ProjectName }, true);
 	}
 
 	private static void CopyResourceDirRecursive(string sourceDir, string destDir)

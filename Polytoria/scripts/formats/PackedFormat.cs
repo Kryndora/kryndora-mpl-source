@@ -83,7 +83,7 @@ public static partial class PackedFormat
 
 	public static async Task PackProjectToArchive(string projectPath, ZipArchive archive, IProgress<LoadOverlayProgress>? progress = null)
 	{
-		string metaJsonPath = projectPath.PathJoin(Globals.ProjectMetaFileName);
+		string metaJsonPath = Globals.ResolveProjectMetaPath(projectPath);
 		string inputJsonPath = projectPath.PathJoin(Globals.ProjectInputMapName);
 
 		progress?.Report(new()
@@ -128,7 +128,7 @@ public static partial class PackedFormat
 
 				indexToFile[id] = targetRelative;
 			}
-			else if (file.EndsWith(".poly"))
+			else if (Globals.IsWorldFile(file))
 			{
 				// Store all world file
 				indexToFile["world_" + relativeP] = relativeP;

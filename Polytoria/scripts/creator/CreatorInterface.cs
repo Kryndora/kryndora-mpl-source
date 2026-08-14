@@ -190,7 +190,7 @@ public partial class CreatorInterface : Control, IScriptObject
 	{
 		string fileName = filePath.GetFile();
 
-		if (fileName == Globals.ProjectMetaFileName)
+		if (Globals.IsProjectMetaFile(fileName))
 		{
 			await CreatorService.Singleton.CreateNewSession(filePath);
 		}
@@ -250,7 +250,7 @@ public partial class CreatorInterface : Control, IScriptObject
 			new()
 			{
 				ProjectName = fName.Capitalize(),
-				MainWorld = "main.poly"
+				MainWorld = Globals.DefaultWorldFileName
 			});
 		}
 		catch (Exception ex)
@@ -361,7 +361,7 @@ public partial class CreatorInterface : Control, IScriptObject
 		{
 			Title = "Open World",
 			DialogMode = DisplayServer.FileDialogMode.OpenFile,
-			Filters = ["*.ptproj,*.poly;Kryndora World", "*.ptm,*.spm;Legacy World"]
+			Filters = ["*.krynproj,*.kryn,*.ptproj,*.poly;Kryndora World", "*.ptm,*.spm;Legacy World"]
 		}, OnWorldOpen);
 	}
 
@@ -415,9 +415,9 @@ public partial class CreatorInterface : Control, IScriptObject
 			{
 				string createAt = Path.Join(atPath, name).SanitizePath();
 
-				if (!createAt.EndsWith(".poly"))
+				if (!Globals.IsWorldFile(createAt))
 				{
-					createAt += ".poly";
+					createAt += Globals.WorldFileExtension;
 				}
 
 				await session.CreateWorld(createAt);

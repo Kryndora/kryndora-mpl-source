@@ -24,10 +24,11 @@ public static class PublishManager
 		var loadOverlay = CreatorService.Interface.LoadOverlay;
 		try
 		{
-			var metadata = PackedFormat.ReadProjectMetadata(File.ReadAllText(projectPath.PathJoin(Globals.ProjectMetaFileName)));
+			string metaPath = Globals.ResolveProjectMetaPath(projectPath);
+			var metadata = PackedFormat.ReadProjectMetadata(File.ReadAllText(metaPath));
 
 			metadata.UseVoiceChat = World.Current?.CoreUI?.UseVoiceChat ?? true;
-			File.WriteAllText(projectPath.PathJoin(Globals.ProjectMetaFileName), System.Text.Json.JsonSerializer.Serialize(metadata, ProjectJSONGenerationContext.Default.CreatorProjectMetadata));
+			File.WriteAllText(metaPath, System.Text.Json.JsonSerializer.Serialize(metadata, ProjectJSONGenerationContext.Default.CreatorProjectMetadata));
 
 			var packed = await PackedFormat.PackProject(projectPath, loadOverlay.CreateProgressReporter("Publishing world"));
 

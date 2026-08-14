@@ -11,11 +11,9 @@ public partial class DevVersionText : Control
 {
 	public override void _Ready()
 	{
+		Visible = false;
 		if (!(Globals.IsInGDEditor || Globals.IsBetaBuild))
-		{
-			Visible = false;
 			return;
-		}
 		string buildName = "build";
 		if (Globals.IsInGDEditor)
 		{

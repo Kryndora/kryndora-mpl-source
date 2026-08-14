@@ -27,7 +27,7 @@ public partial class FileItemContextMenu : ContextMenu
 		// Scan for root folder
 		foreach (string item in Targets)
 		{
-			if (item == Globals.ProjectMetaFileName || item == "")
+			if (Globals.IsProjectMetaFile(item) || item == "")
 			{
 				isNotLocked = false;
 				break;
@@ -84,7 +84,7 @@ public partial class FileItemContextMenu : ContextMenu
 			AddSeparator();
 		}
 
-		if (!(Target != null && Target == Globals.ProjectMetaFileName))
+		if (!(Target != null && Globals.IsProjectMetaFile(Target)))
 		{
 			AddIconItem("trash", "Delete", 61);
 		}

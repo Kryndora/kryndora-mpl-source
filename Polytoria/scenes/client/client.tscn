@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bl4gd7n8fs0yg" path="res://scripts/client/ClientEntry.cs" id="1_qqd53"]
 [ext_resource type="PackedScene" uid="uid://hinrdn5nk18f" path="res://scenes/client/ui/misc/dev_version.tscn" id="3_gmu12"]
-[ext_resource type="PackedScene" uid="uid://pclh81wym355" path="res://scenes/client/ui/loading_screen.tscn" id="3_qx1al"]
+[ext_resource type="PackedScene" path="res://scenes/client/ui/loading_screen_kryndora.tscn" id="3_qx1al"]
 [ext_resource type="PackedScene" uid="uid://b6das42i4elj4" path="res://scenes/client/ui/core/focus_gradient.tscn" id="4_gmu12"]
 [ext_resource type="PackedScene" path="res://scenes/client/ui/core/disconnect_screen_kryndora.tscn" id="4_icqby"]
 [ext_resource type="Script" uid="uid://chlk7tbwpcj2n" path="res://scripts/client/ui/core/GamepadFocusbox.cs" id="4_qx1al"]

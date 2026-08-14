@@ -116,11 +116,11 @@ public sealed partial class CreatorService : Node, IScriptObject
 		{
 			Interface.ImportModel(firstFile);
 		}
-		else if (firstFileExt == "ptproj")
+		else if (firstFileExt == "krynproj" || firstFileExt == "ptproj")
 		{
 			await CreateNewSession(firstFile);
 		}
-		else if (firstFileExt == "poly")
+		else if (Globals.IsWorldFile(firstFile))
 		{
 			Interface.OpenWorldFile(firstFile);
 		}
@@ -147,26 +147,80 @@ public sealed partial class CreatorService : Node, IScriptObject
 		base._Process(delta);
 	}
 
+	private static string MigrateLegacyProject(string projectFilePath, ref string? targetPlace)
+	{
+		try
+		{
+			string folder = Path.GetFullPath(Path.Combine(projectFilePath, "../"));
+			string tempFolder = Path.GetFullPath(Path.Combine(folder, ".poly"));
+
+			foreach (string legacyWorld in Directory.EnumerateFiles(folder, "*" + Globals.LegacyWorldFileExtension, SearchOption.AllDirectories))
+			{
+				if (Path.GetFullPath(legacyWorld).StartsWith(tempFolder, StringComparison.OrdinalIgnoreCase)) continue;
+
+				string renamed = Path.ChangeExtension(legacyWorld, Globals.WorldFileExtension);
+				if (File.Exists(renamed)) continue;
+
+				File.Move(legacyWorld, renamed);
+				PT.Print("Converted world file to ", Globals.WorldFileExtension, ": ", Path.GetFileName(renamed));
+
+				if (targetPlace != null && Path.GetFullPath(targetPlace) == Path.GetFullPath(legacyWorld))
+					targetPlace = renamed;
+			}
+
+			CreatorProjectMetadata metadata = PackedFormat.ReadProjectMetadata(File.ReadAllText(projectFilePath));
+			bool metadataChanged = false;
+
+			if (metadata.MainWorld.EndsWith(Globals.LegacyWorldFileExtension, StringComparison.OrdinalIgnoreCase))
+			{
+				metadata.MainWorld = Path.ChangeExtension(metadata.MainWorld, Globals.WorldFileExtension).Replace('\\', '/');
+				metadataChanged = true;
+			}
+
+			bool legacyMetaFile = Path.GetFileName(projectFilePath) == Globals.LegacyProjectMetaFileName;
+			string finalMetaPath = legacyMetaFile ? Path.Combine(folder, Globals.ProjectMetaFileName) : projectFilePath;
+
+			if (metadataChanged || legacyMetaFile)
+			{
+				File.WriteAllText(finalMetaPath, System.Text.Json.JsonSerializer.Serialize(metadata, ProjectJSONGenerationContext.Default.CreatorProjectMetadata));
+
+				if (legacyMetaFile && File.Exists(finalMetaPath))
+				{
+					File.Delete(projectFilePath);
+					PT.Print("Converted project file to ", Globals.ProjectMetaFileName);
+				}
+			}
+
+			return finalMetaPath.SanitizePath();
+		}
+		catch (Exception ex)
+		{
+			PT.PrintErr("Could not convert project to the new file names: ", ex.Message);
+			return projectFilePath;
+		}
+	}
+
 	public async Task CreateNewSession(string projectFilePath = "", World? worldOverride = null)
 	{
 		string? targetPlace = null;
 		projectFilePath = ProjectSettings.GlobalizePath(projectFilePath);
 
-		if (File.GetAttributes(projectFilePath) == FileAttributes.Directory || projectFilePath.GetExtension() == "poly")
+		if (File.GetAttributes(projectFilePath) == FileAttributes.Directory || Globals.IsWorldFile(projectFilePath))
 		{
 			string originFilePath = projectFilePath;
-			if (projectFilePath.GetExtension() == "poly")
+			bool openedWorldFile = Globals.IsWorldFile(projectFilePath);
+			if (openedWorldFile)
 			{
 				projectFilePath += "/../";
 			}
-			string projectFileRoot = Path.GetFullPath(Path.Join(projectFilePath, Globals.ProjectMetaFileName));
+			string projectFileRoot = Path.GetFullPath(Globals.ResolveProjectMetaPath(projectFilePath));
 			if (!File.Exists(projectFileRoot))
 			{
 				Interface.PopupAlert("Couldn't find the project file");
 				return;
 			}
 
-			if (originFilePath.GetExtension() == "poly")
+			if (openedWorldFile)
 			{
 				targetPlace = originFilePath;
 			}
@@ -177,6 +231,8 @@ public sealed partial class CreatorService : Node, IScriptObject
 		projectFilePath = projectFilePath.SanitizePath();
 
 		PT.Print("Opening ", projectFilePath);
+
+		projectFilePath = MigrateLegacyProject(projectFilePath, ref targetPlace);
 
 		string folder = Path.GetFullPath(Path.Combine(projectFilePath, "../")).SanitizePath();
 		CreatorSession session = new()
@@ -268,7 +324,7 @@ public sealed partial class CreatorService : Node, IScriptObject
 		{
 			Title = "Save as...",
 			CurrentDirectory = CurrentSession.ProjectFolderPath,
-			Filters = ["*.poly;Kryndora World"],
+			Filters = ["*.kryn;Kryndora World"],
 			DialogMode = DisplayServer.FileDialogMode.SaveFile,
 		}, async paths =>
 		{
@@ -276,9 +332,9 @@ public sealed partial class CreatorService : Node, IScriptObject
 			{
 				string path = paths[0];
 
-				if (!path.EndsWith(".poly"))
+				if (!Globals.IsWorldFile(path))
 				{
-					path += ".poly";
+					path += Globals.WorldFileExtension;
 				}
 
 				if (!PathUtils.IsPathInsideDirectory(path, CurrentSession.ProjectFolderPath))

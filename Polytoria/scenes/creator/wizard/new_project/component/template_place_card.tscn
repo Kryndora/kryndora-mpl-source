@@ -77,13 +77,13 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="Layout/Margin/Layout" unique_id=2049353706]
 layout_mode = 2
-text = "Blank Place"
+text = "Empty World"
 
 [node name="Label2" type="Label" parent="Layout/Margin/Layout" unique_id=1448251239]
 self_modulate = Color(0.5649617, 0.5649616, 0.5649616, 1)
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
-text = "Absolutely Nothing!"
+text = "Just sky. Build it your way."
 autowrap_mode = 2
 
 [node name="Border" type="Panel" parent="." unique_id=388007167]

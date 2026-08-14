@@ -162,7 +162,7 @@ public partial class FileBrowserTab : Control
 			}
 		}
 
-		if (relativePath == Globals.ProjectMetaFileName)
+		if (Globals.IsProjectMetaFile(relativePath))
 		{
 			iconPath = "polytoria";
 		}
