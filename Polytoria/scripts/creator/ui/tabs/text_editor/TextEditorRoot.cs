@@ -61,7 +61,7 @@ public partial class TextEditorRoot : Node
 			await _completion.CloseScriptAsync(Container.TargetFilePathAbsolute);
 			_completion.PublishDiagnostics -= OnPublishDiagnostics;
 		}
-		CreatorSettingsService.Instance.Changed -= OnCreatorSettingChanged;
+		KrynSettingsService.Instance.Changed -= OnCreatorSettingChanged;
 		base._ExitTree();
 	}
 
@@ -84,7 +84,7 @@ public partial class TextEditorRoot : Node
 		CodeEditor.TextChanged += OnCodeEditTextChanged;
 		InitSyntaxHighlighter();
 
-		CreatorSettingsService.Instance.Changed += OnCreatorSettingChanged;
+		KrynSettingsService.Instance.Changed += OnCreatorSettingChanged;
 		ApplyIndentSettings();
 
 		CodeEditor.CodeCompletionPrefixes = [".", ":", "\n", ",", " ", "("];
@@ -115,7 +115,7 @@ public partial class TextEditorRoot : Node
 
 	private void OnCreatorSettingChanged(SettingChangedEvent e)
 	{
-		if (e.Key == CreatorSettingKeys.CodeEditor.IndentationMode || e.Key == CreatorSettingKeys.CodeEditor.IndentationSize)
+		if (e.Key == KrynSettingKeys.CodeEditor.IndentationMode || e.Key == KrynSettingKeys.CodeEditor.IndentationSize)
 		{
 			ApplyIndentSettings();
 		}
@@ -123,8 +123,8 @@ public partial class TextEditorRoot : Node
 
 	private void ApplyIndentSettings()
 	{
-		IndentationModeEnum indentationMode = CreatorSettingsService.Instance.Get<IndentationModeEnum>(CreatorSettingKeys.CodeEditor.IndentationMode);
-		int indentationSize = CreatorSettingsService.Instance.Get<int>(CreatorSettingKeys.CodeEditor.IndentationSize);
+		IndentationModeEnum indentationMode = KrynSettingsService.Instance.Get<IndentationModeEnum>(KrynSettingKeys.CodeEditor.IndentationMode);
+		int indentationSize = KrynSettingsService.Instance.Get<int>(KrynSettingKeys.CodeEditor.IndentationSize);
 		CodeEditor.IndentUseSpaces = indentationMode == IndentationModeEnum.Spaces;
 		CodeEditor.IndentSize = indentationSize;
 	}
@@ -261,7 +261,7 @@ public partial class TextEditorRoot : Node
 	{
 		if (Saved)
 			return;
-		if (!CreatorSettingsService.Instance.Get<bool>(CreatorSettingKeys.CodeEditor.SaveCodeEverySecond))
+		if (!KrynSettingsService.Instance.Get<bool>(KrynSettingKeys.CodeEditor.SaveCodeEverySecond))
 			return;
 
 		Save();

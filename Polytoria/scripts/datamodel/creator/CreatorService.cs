@@ -559,7 +559,7 @@ public sealed partial class CreatorService : Node, IScriptObject
 			return;
 		}
 
-		PreferredEditorEnum userPref = CreatorSettingsService.Instance.Get<PreferredEditorEnum>(CreatorSettingKeys.CodeEditor.PreferredEditor);
+		PreferredEditorEnum userPref = KrynSettingsService.Instance.Get<PreferredEditorEnum>(KrynSettingKeys.CodeEditor.PreferredEditor);
 
 		if (Globals.ScriptFileExtensions.Contains(path.GetExtension()))
 		{

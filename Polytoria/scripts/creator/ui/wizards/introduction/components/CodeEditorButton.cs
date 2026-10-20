@@ -14,7 +14,7 @@ public partial class CodeEditorButton : Button
 	public override void _Pressed()
 	{
 		if (!IsVisibleInTree()) return;
-		CreatorSettingsService.Instance.Set(CreatorSettingKeys.CodeEditor.PreferredEditor, Editor);
+		KrynSettingsService.Instance.Set(KrynSettingKeys.CodeEditor.PreferredEditor, Editor);
 		base._Pressed();
 	}
 }

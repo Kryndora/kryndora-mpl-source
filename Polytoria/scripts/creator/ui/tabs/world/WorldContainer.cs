@@ -50,9 +50,9 @@ public sealed partial class WorldContainer : SubViewportContainer
 
 	public override void _Ready()
 	{
-		if (CreatorSettingsService.Instance != null)
+		if (KrynSettingsService.Instance != null)
 		{
-			var applier = CreatorSettingsService.Instance.GetNodeOrNull<GraphicsSettingsApplier>(GraphicsSettingsApplier.NodeName);
+			var applier = KrynSettingsService.Instance.GetNodeOrNull<GraphicsSettingsApplier>(GraphicsSettingsApplier.NodeName);
 			if (applier != null)
 			{
 				applier.RenderViewport = _subViewport;

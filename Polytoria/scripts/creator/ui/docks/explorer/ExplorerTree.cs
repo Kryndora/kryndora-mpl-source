@@ -5,6 +5,7 @@
 using Godot;
 using Polytoria.Attributes;
 using Polytoria.Datamodel;
+using Polytoria.Creator.Settings;
 using Polytoria.Datamodel.Creator;
 using Polytoria.Shared;
 using System;
@@ -70,7 +71,8 @@ public partial class ExplorerTree : Tree
 			{
 				TreeItem hit = GetItemAtPosition(mouseEvent.Position);
 				if (hit != null && hit == GetSelected() && CanRename(hit)
-					&& GetColumnAtPosition(mouseEvent.Position) == 0)
+					&& GetColumnAtPosition(mouseEvent.Position) == 0
+					&& KrynSettingsService.Instance.Get<bool>(KrynSettingKeys.Interface.RenameOnClick))
 				{
 					StartRenameAfterDelay(hit);
 				}

@@ -40,9 +40,9 @@ public sealed partial class Lighting : Instance
 		_sky = environment.Sky;
 
 #if CREATOR
-		if (CreatorSettingsService.Instance != null)
+		if (KrynSettingsService.Instance != null)
 		{
-			ApplyGraphicsSettings(CreatorSettingsService.Instance);
+			ApplyGraphicsSettings(KrynSettingsService.Instance);
 		}
 		else
 #endif

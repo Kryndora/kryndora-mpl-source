@@ -55,6 +55,7 @@ public sealed partial class InsertService : Instance
 		npc.Character = ptm;
 		ptm.Name = "Character";
 		ptm.Parent = npc;
+		ptm.IsTestBody = true;
 		ptm.LocalPosition = Vector3.Zero;
 		ptm.LocalRotation = Vector3.Zero;
 		ptm.LocalSize = Vector3.One;

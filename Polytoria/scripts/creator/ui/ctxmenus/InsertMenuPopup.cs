@@ -253,9 +253,8 @@ public partial class InsertMenuPopup : PopupPanel
 
 			foreach (string className in filtered)
 			{
-				if (className == "NPC" && PolyCreatorAPI.UserID != 3) continue;
-				if (className == "Clothing" && PolyCreatorAPI.UserID != 3) continue;
-				if (className == "Accessory" && PolyCreatorAPI.UserID != 3) continue;
+				if (PolyCreatorAPI.UserID != 3 && (className == "Accessory" || className == "Clothing")) continue;
+
 				string myClass = className;
 
 				InsertPopupItem item = _itemPacked.Instantiate<InsertPopupItem>();

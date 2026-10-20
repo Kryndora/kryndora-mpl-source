@@ -35,7 +35,7 @@ public static class PublishManager
 			loadOverlay?.SetStatus("Uploading now...");
 			CreatorPublishResponse publishRes = await PolyCreatorAPI.UploadWorld(packed, placeID, metadata.MainWorld);
 
-			if (CreatorSettingsService.Instance.Get<bool>(CreatorSettingKeys.Creator.OpenWebAfterPublish))
+			if (KrynSettingsService.Instance.Get<bool>(KrynSettingKeys.Creator.OpenWebAfterPublish))
 				OS.ShellOpen(publishRes.Link);
 			CreatorService.Interface.StatusBar?.SetStatus("World published");
 			loadOverlay?.Hide();
@@ -60,7 +60,7 @@ public static class PublishManager
 			CreatorPublishResponse publishRes = await PolyCreatorAPI.UploadModel(packed, modelID);
 			CreatorService.Interface.LoadOverlay?.Hide();
 
-			if (CreatorSettingsService.Instance.Get<bool>(CreatorSettingKeys.Creator.OpenWebAfterPublish))
+			if (KrynSettingsService.Instance.Get<bool>(KrynSettingKeys.Creator.OpenWebAfterPublish))
 				OS.ShellOpen(publishRes.Link);
 			CreatorService.Interface.StatusBar?.SetStatus("Model published");
 			loadOverlay?.Hide();

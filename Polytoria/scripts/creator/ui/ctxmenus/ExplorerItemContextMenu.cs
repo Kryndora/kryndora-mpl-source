@@ -201,7 +201,7 @@ public partial class ExplorerItemContextMenu : ContextMenu
 					{
 						if (Target.EditableChildren)
 						{
-							if (!await CreatorService.Interface.PromptConfirmation("Closing this model will discard any unsaved changes.", dismissKey: CreatorSettingKeys.Popups.CloseModelWarning)) return;
+							if (!await CreatorService.Interface.PromptConfirmation("Closing this model will discard any unsaved changes.", dismissKey: KrynSettingKeys.Popups.CloseModelWarning)) return;
 						}
 						Target?.EditableChildren = !Target.EditableChildren;
 					}

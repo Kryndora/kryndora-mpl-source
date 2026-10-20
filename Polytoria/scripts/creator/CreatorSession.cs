@@ -234,7 +234,7 @@ public partial class CreatorSession : Node, IDisposable
 
 	private void StartBackupTimer()
 	{
-		float backupInterval = CreatorSettingsService.Instance.Get<float>(CreatorSettingKeys.Backup.BackupInterval);
+		float backupInterval = KrynSettingsService.Instance.Get<float>(KrynSettingKeys.Backup.BackupInterval);
 		_backupTimer.Start(backupInterval * 60f);
 	}
 
@@ -948,7 +948,7 @@ return module";
 			Directory.CreateDirectory(backupFolderPath);
 		}
 
-		int maxCount = CreatorSettingsService.Instance.Get<int>(CreatorSettingKeys.Backup.MaxBackupCount);
+		int maxCount = KrynSettingsService.Instance.Get<int>(KrynSettingKeys.Backup.MaxBackupCount);
 
 		// Delete oldest folder
 		List<DirectoryInfo> backupFolders = [.. Directory.GetDirectories(backupFolderPath)

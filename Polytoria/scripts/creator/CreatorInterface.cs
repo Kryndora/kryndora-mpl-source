@@ -33,7 +33,7 @@ public partial class CreatorInterface : Control, IScriptObject
 	private const string CreateScriptPopupPath = "res://scenes/creator/popups/create_script_kryndora.tscn";
 	private const string GiveNamePopupPath = "res://scenes/creator/popups/give_name.tscn";
 	private const string LinkDevicePopupPath = "res://scenes/creator/popups/link_device.tscn";
-	private const string SettingsPopupPath = "res://scenes/creator/popups/settings/settings.tscn";
+	private const string SettingsPopupPath = "res://scenes/creator/popups/settings/kryn_settings.tscn";
 	private const string InputManagerPopupPath = "res://scenes/creator/popups/input_manager/input_manager.tscn";
 	private const string BindKeyPopupPath = "res://scenes/creator/popups/bind_key.tscn";
 	private const string PublishPopupPath = "res://scenes/creator/popups/publish/publish.tscn";
@@ -114,7 +114,7 @@ public partial class CreatorInterface : Control, IScriptObject
 			StartupSplash.Singleton.Open();
 		}
 
-		CreatorSettingsService.Instance.Changed += OnSettingChanged;
+		KrynSettingsService.Instance.Changed += OnSettingChanged;
 		ApplyUIScale();
 		ApplyFullscreen();
 		ApplyVSync();
@@ -124,7 +124,7 @@ public partial class CreatorInterface : Control, IScriptObject
 
 	public override void _ExitTree()
 	{
-		CreatorSettingsService.Instance.Changed -= OnSettingChanged;
+		KrynSettingsService.Instance.Changed -= OnSettingChanged;
 		base._ExitTree();
 	}
 
@@ -132,7 +132,7 @@ public partial class CreatorInterface : Control, IScriptObject
 	{
 		switch (e.Key)
 		{
-			case CreatorSettingKeys.Interface.UiScale:
+			case KrynSettingKeys.Interface.UiScale:
 				ApplyUIScale();
 				break;
 			case SharedSettingKeys.Display.Fullscreen:
@@ -152,7 +152,7 @@ public partial class CreatorInterface : Control, IScriptObject
 
 	private void ApplyUIScale()
 	{
-		float baseUIScale = CreatorSettingsService.Instance.Get<float>(CreatorSettingKeys.Interface.UiScale);
+		float baseUIScale = KrynSettingsService.Instance.Get<float>(KrynSettingKeys.Interface.UiScale);
 
 		// Get the OS display scale factor
 		int screenId = DisplayServer.WindowGetCurrentScreen();
@@ -171,12 +171,12 @@ public partial class CreatorInterface : Control, IScriptObject
 			return;
 		}
 
-		DisplayServer.WindowSetMode(CreatorSettingsService.Instance.Get<bool>(SharedSettingKeys.Display.Fullscreen) ? DisplayServer.WindowMode.Fullscreen : DisplayServer.WindowMode.Maximized);
+		DisplayServer.WindowSetMode(KrynSettingsService.Instance.Get<bool>(SharedSettingKeys.Display.Fullscreen) ? DisplayServer.WindowMode.Fullscreen : DisplayServer.WindowMode.Maximized);
 	}
 
 	private static void ApplyVSync()
 	{
-		bool useVSync = CreatorSettingsService.Instance.Get<bool>(SharedSettingKeys.Display.VSync);
+		bool useVSync = KrynSettingsService.Instance.Get<bool>(SharedSettingKeys.Display.VSync);
 		DisplayServer.WindowSetVsyncMode(useVSync ? DisplayServer.VSyncMode.Enabled : DisplayServer.VSyncMode.Disabled);
 		OS.LowProcessorUsageMode = useVSync;
 	}
@@ -467,7 +467,7 @@ public partial class CreatorInterface : Control, IScriptObject
 	{
 		if (dismissKey != null)
 		{
-			bool isShown = CreatorSettingsService.Instance.Get<bool>(dismissKey);
+			bool isShown = KrynSettingsService.Instance.Get<bool>(dismissKey);
 			if (!isShown) return true;
 		}
 
@@ -491,7 +491,7 @@ public partial class CreatorInterface : Control, IScriptObject
 			tcs.SetResult(true);
 			if (dismissKey != null)
 			{
-				CreatorSettingsService.Instance.Set(dismissKey, false);
+				KrynSettingsService.Instance.Set(dismissKey, false);
 			}
 			dialog.QueueFree();
 		};
@@ -530,7 +530,7 @@ public partial class CreatorInterface : Control, IScriptObject
 
 	public void OpenSettings()
 	{
-		SettingsPopup popup = Globals.CreateInstanceFromScene<SettingsPopup>(SettingsPopupPath);
+		KrynSettingsWindow popup = Globals.CreateInstanceFromScene<KrynSettingsWindow>(SettingsPopupPath);
 		PopupWindow(popup);
 	}
 
@@ -676,7 +676,7 @@ public partial class CreatorInterface : Control, IScriptObject
 
 	public static void ToggleFullscreen()
 	{
-		var settings = CreatorSettingsService.Instance;
+		var settings = KrynSettingsService.Instance;
 		settings.Set(SharedSettingKeys.Display.Fullscreen, !settings.Get<bool>(SharedSettingKeys.Display.Fullscreen));
 	}
 

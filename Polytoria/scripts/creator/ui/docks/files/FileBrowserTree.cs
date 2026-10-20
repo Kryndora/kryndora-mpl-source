@@ -180,7 +180,7 @@ public partial class FileBrowserTree : Tree
 
 		if (dragData is FileDragData fileDrag)
 		{
-			if (!await CreatorService.Interface.PromptConfirmation($"Move {fileDrag.Files.Length} file(s)?", dismissKey: CreatorSettingKeys.Popups.MoveFileConfirmation)) return;
+			if (!await CreatorService.Interface.PromptConfirmation($"Move {fileDrag.Files.Length} file(s)?", dismissKey: KrynSettingKeys.Popups.MoveFileConfirmation)) return;
 			AutoSelects.Clear();
 			foreach (string file in fileDrag.Files)
 			{

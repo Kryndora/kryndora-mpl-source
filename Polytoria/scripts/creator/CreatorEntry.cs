@@ -34,9 +34,9 @@ public partial class CreatorEntry : Node
 
 		AddChild(new CreatorMcpBridge { Name = "CreatorMcpBridge" });
 
-		CreatorSettingsService creatorSettingsService = new()
+		KrynSettingsService creatorSettingsService = new()
 		{
-			Name = "CreatorSettingsService"
+			Name = "KrynSettingsService"
 		};
 		AddChild(creatorSettingsService, true, InternalMode.Front);
 		creatorSettingsService.Init();

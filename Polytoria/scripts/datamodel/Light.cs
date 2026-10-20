@@ -113,7 +113,7 @@ public partial class Light : Dynamic
 
 		ISettingsContext? settings =
 #if CREATOR
-			(ISettingsContext?)CreatorSettingsService.Instance ??
+			(ISettingsContext?)KrynSettingsService.Instance ??
 #endif
 			ClientSettingsService.Instance;
 		if (settings != null)

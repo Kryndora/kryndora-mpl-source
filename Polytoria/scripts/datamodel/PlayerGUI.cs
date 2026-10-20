@@ -11,7 +11,7 @@ namespace Polytoria.Datamodel;
 [Static("PlayerGUI")]
 public partial class PlayerGUI : Instance
 {
-	private const string TouchControlsPath = "res://scenes/client/ui/touch_controls.tscn";
+	private const string TouchControlsPath = "res://scenes/client/ui/kryn_touch_controls.tscn";
 	internal InputFallbackBase InputFallback = null!;
 
 	public override Node CreateGDNode()

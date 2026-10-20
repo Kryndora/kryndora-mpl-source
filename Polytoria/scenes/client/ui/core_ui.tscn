@@ -4,7 +4,6 @@
 [ext_resource type="Theme" uid="uid://2f3k1nh6p5ac" path="res://resources/themes/hud.tres" id="1_otsis"]
 [ext_resource type="Texture2D" path="res://assets/textures/client/ui/menu_button/chat-kryndora.png" id="4_c3g11"]
 [ext_resource type="PackedScene" path="res://scenes/client/ui/health/health_bar_kryndora.tscn" id="5_6062u"]
-[ext_resource type="Texture2D" uid="uid://dhbxwwpkupvvt" path="res://assets/textures/client/ui/mobile_controls/jump.png" id="5_aji3h"]
 [ext_resource type="Texture2D" uid="uid://c226wtcviyejd" path="res://assets/textures/client/ui/menu_button/backpack.png" id="5_msdsf"]
 [ext_resource type="Script" path="res://scripts/client/ui/chat/ChatToggleKryndora.cs" id="5_px6m7"]
 [ext_resource type="PackedScene" uid="uid://dxpt467wotnp" path="res://scenes/client/ui/playerlist/playerlist.tscn" id="7_0yob1"]
@@ -14,7 +13,6 @@
 [ext_resource type="Script" uid="uid://17j8q3l5bq0d" path="res://scripts/client/ui/menu/UIMenuButton.cs" id="11_0yob1"]
 [ext_resource type="Texture2D" uid="uid://6hcsevjh47or" path="res://assets/textures/client/ui/menu_button/pt/polytoria_outer.png" id="11_6062u"]
 [ext_resource type="Texture2D" uid="uid://bfuo22gyyhcyx" path="res://assets/textures/client/ui/menu_button/pt/polytoria_box.png" id="12_0yob1"]
-[ext_resource type="Script" uid="uid://cvbexph60048q" path="res://scripts/client/ui/touch/JumpButton.cs" id="12_pljxg"]
 [ext_resource type="Texture2D" uid="uid://8pnjtnn5sm2" path="res://assets/textures/client/ui/menu_button/pt/close.png" id="13_e84r2"]
 [ext_resource type="PackedScene" uid="uid://kd4fs42si2ah" path="res://scenes/client/ui/menu/game_menu.tscn" id="14_6062u"]
 [ext_resource type="Texture2D" uid="uid://doqoshw2g8hpk" path="res://assets/textures/client/ui/indicators/high_ping.svg" id="17_dsnfc"]
@@ -514,24 +512,6 @@ layout_mode = 1
 
 [node name="Notification" parent="Control" unique_id=352403586 instance=ExtResource("20_02uox")]
 layout_mode = 1
-
-[node name="JumpButton" type="Control" parent="Control" unique_id=1815722505]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 0
-grow_vertical = 0
-script = ExtResource("12_pljxg")
-
-[node name="TouchScreenButton" type="TouchScreenButton" parent="Control/JumpButton" unique_id=731100145]
-position = Vector2(-222, -200)
-scale = Vector2(0.6, 0.6)
-texture_normal = ExtResource("5_aji3h")
-action = "jump"
-visibility_mode = 1
 
 [node name="PurchasePrompt" parent="Control" unique_id=1791377018 instance=ExtResource("28_gmv8i")]
 layout_mode = 1

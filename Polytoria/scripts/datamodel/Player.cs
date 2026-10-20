@@ -348,6 +348,7 @@ public sealed partial class Player : NPC
 	public static readonly string[] EmoteWheelList =
 	[
 		"dance",
+		"dance2",
 	];
 
 	// List of all emotes

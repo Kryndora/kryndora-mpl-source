@@ -698,7 +698,12 @@ public sealed partial class KrynAvatar : CharacterModel
 			SetDefaultBodyVisible(false);
 			SetBlockyBodyVisible(false);
 			SetBlockyFaceVisible(false);
-			if (_customAvatar == null && Pivot != null)
+			if (_customAvatar != null)
+			{
+				ApplyTestAvatarMaterials(_customAvatar, _shirtStyle == "kryndora");
+				return;
+			}
+			if (Pivot != null)
 			{
 				PackedScene? scene = ResourceLoader.Load<PackedScene>(KryndoraTestAvatarScenePath);
 				if (scene != null)

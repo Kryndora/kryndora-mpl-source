@@ -51,11 +51,37 @@ public sealed partial class Globals : Node
 
 	public const string ToolboxFolderName = "toolbox";
 #if CREATOR
-	public const string ProjectMetaFileName = "project.ptproj";
+	public const string ProjectMetaFileName = "project.krynproj";
+	public const string LegacyProjectMetaFileName = "project.ptproj";
 	public const string ProjectIndexName = "file-lock.json";
 	public const string ProjectInputMapName = "input.json";
 	public const string ModelFileExtension = "model";
 	public static readonly string[] ScriptFileExtensions = ["lua", "luau"];
+
+	public const string WorldFileExtension = ".kryn";
+	public const string LegacyWorldFileExtension = ".poly";
+	public const string DefaultWorldFileName = "main.kryn";
+
+	public static bool IsWorldFile(string path)
+	{
+		return path.EndsWith(WorldFileExtension, System.StringComparison.OrdinalIgnoreCase)
+			|| path.EndsWith(LegacyWorldFileExtension, System.StringComparison.OrdinalIgnoreCase);
+	}
+
+	public static bool IsProjectMetaFile(string fileName)
+	{
+		return fileName == ProjectMetaFileName || fileName == LegacyProjectMetaFileName;
+	}
+
+	public static string ResolveProjectMetaPath(string folderPath)
+	{
+		string current = System.IO.Path.Join(folderPath, ProjectMetaFileName);
+		if (System.IO.File.Exists(current))
+			return current;
+
+		string legacy = System.IO.Path.Join(folderPath, LegacyProjectMetaFileName);
+		return System.IO.File.Exists(legacy) ? legacy : current;
+	}
 #endif
 
 	public static Globals Singleton { get; private set; } = null!;

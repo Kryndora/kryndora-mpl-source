@@ -179,7 +179,7 @@ public sealed partial class Tabs : Control
 		{
 			if (!(control is TextEditorContainer txt && txt.EditorRoot.Saved))
 			{
-				if (!await CreatorService.Interface.PromptConfirmation("Are you sure you want to close this tab? Any unsaved changes will be lost.", dismissKey: CreatorSettingKeys.Popups.CloseTabWarning)) return;
+				if (!await CreatorService.Interface.PromptConfirmation("Are you sure you want to close this tab? Any unsaved changes will be lost.", dismissKey: KrynSettingKeys.Popups.CloseTabWarning)) return;
 			}
 
 			if (control is WorldContainer g)
