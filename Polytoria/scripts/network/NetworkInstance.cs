@@ -134,6 +134,11 @@ public class NetworkInstance
 		return null;
 	}
 
+	private static void ReportLater(string message)
+	{
+		Callable.From(() => GD.PushWarning(message)).CallDeferred();
+	}
+
 	public void SendMessage(int targetID, byte[] data, TransferMode transferMode, int transferChannel = 0)
 	{
 		_actionQueue.Enqueue(() =>
@@ -141,13 +146,13 @@ public class NetworkInstance
 			ENetPacketPeer? peer = GetPacketPeerFromId(targetID);
 			if (peer == null)
 			{
-				GD.PushWarning(targetID, " doesn't exist");
+				ReportLater("Peer " + targetID + " doesn't exist");
 				return;
 			}
 			Error err = peer.Send(transferChannel, data, (int)transferMode);
 			if (err != Error.Ok)
 			{
-				GD.PushError("Send error: ", err);
+				ReportLater("Send error: " + err);
 			}
 		});
 	}
@@ -159,7 +164,7 @@ public class NetworkInstance
 			ENetPacketPeer? peer = GetPacketPeerFromId(targetID);
 			if (peer == null)
 			{
-				GD.PushWarning(targetID, " doesn't exist");
+				ReportLater("Peer " + targetID + " doesn't exist");
 				return;
 			}
 			if (force)

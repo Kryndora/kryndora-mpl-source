@@ -42,15 +42,15 @@ public partial class WebAssetLoader : Node
 
 					try
 					{
-						if (!_cache.TryGetValue(item, out WebCacheItem result))
+						if (_cache.TryGetValue(item, out WebCacheItem ready))
 						{
-							result = await LoadResource(item);
+							WebCacheItem known = ready;
+							Callable.From(() => callback(known.Resource)).CallDeferred();
+							continue;
 						}
 
-						Callable.From(() =>
-						{
-							callback(result.Resource);
-						}).CallDeferred();
+						WebCacheItem loaded = await LoadResource(item);
+						Callable.From(() => Publish(loaded, callback)).CallDeferred();
 					}
 					catch (Exception exception)
 					{
@@ -79,14 +79,25 @@ public partial class WebAssetLoader : Node
 				{
 					Image image = LoadImage(buffer, item.URL);
 					image.GenerateMipmaps();
-					item.Resource = ImageTexture.CreateFromImage(image);
+					item.Picture = image;
 
-					_cache.TryAdd(item, item);
 					return item;
 				}
 			default:
 				throw new NotImplementedException($"Resource type {item.Type} not implemented!");
 		}
+	}
+
+	private void Publish(WebCacheItem item, Action<Resource> callback)
+	{
+		if (item.Picture != null)
+		{
+			item.Resource = ImageTexture.CreateFromImage(item.Picture);
+			item.Picture = null;
+			_cache.TryAdd(item, item);
+		}
+
+		callback(item.Resource);
 	}
 
 	private static Image LoadImage(byte[] buffer, string url)
@@ -173,6 +184,7 @@ public struct WebCacheItem
 	public string URL { get; set; }
 	public WebResourceType Type { get; set; }
 	public Resource Resource { get; set; }
+	public Image? Picture { get; set; }
 
 	public override readonly bool Equals(object? obj)
 	{
